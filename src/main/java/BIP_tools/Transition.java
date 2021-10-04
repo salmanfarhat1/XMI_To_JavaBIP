@@ -4,7 +4,6 @@ public class Transition {
 	private String transition_name;
 	private State src;
 	private State dst;
-	private Boolean synchron;
 	private Component componentOfTheTransition;
 	
 	public Component getComponentOfTheTransition() {
@@ -15,17 +14,16 @@ public class Transition {
 		this.componentOfTheTransition = componentOfTheTransition;
 	}
 
-	public Transition(String transition_name, State src, State dst,  Boolean synchron ,Component componentOfTheTransition  ) {
+	public Transition(String transition_name, State src, State dst ,Component componentOfTheTransition  ) {
 		this.transition_name = transition_name;
 		this.src = src;
 		this.dst = dst;
 		this.componentOfTheTransition = componentOfTheTransition;
-		this.synchron = synchron;
 	}
 
 	@Override
 	public String toString() {
-		return "\n\n\nTransition \n[ Component Of The Transition "+componentOfTheTransition.getName() +"transition_name=" + transition_name + "is Synchron " + synchron +", src=" + src.getState_name() + ", dst=" + dst.getState_name() + "\n\n]\n\n";
+		return "\n\n\nTransition \n[ Component Of The Transition "+componentOfTheTransition.getName() +"transition_name=" + transition_name +", src=" + src.getState_name() + ", dst=" + dst.getState_name() + "\n\n]\n\n";
 	}
 
 	public String getTransition_name() {
@@ -48,14 +46,5 @@ public class Transition {
 		return dst;
 	}
 
-	public void setDst(State dst) {
-		this.dst = dst;
-	}
-	public Boolean getSynchron() {
-		return synchron;
-	}
 
-	public void setSynchron(Boolean synchron) {
-		this.synchron = synchron;
-	}
 }

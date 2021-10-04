@@ -8,7 +8,8 @@ import BIP_tools.Enforceable;
 import BIP_tools.Guard;
 import BIP_tools.Guard_Exclude;
 import BIP_tools.Guard_Implies;
-import BIP_tools.Main_Component;
+import BIP_tools.Internal;
+import BIP_tools.Spontaneous;
 import BIP_tools.Connector_Motif;
 import BIP_tools.State;
 import BIP_tools.Transition;
@@ -38,8 +39,9 @@ public class Generate_JavaBIP_Code {
 	public static final String transition_name = "transition_name";
 	public static final String transition_src = "src";
 	public static final String transition_dst = "dst";
-
+	public static final String transition_type = "xsi:type";
 	public static final String component = "component";  
+	public static final String guard = "guards"; 
 	
 	// kind of initialization to deal with my xml file
 	public static Element Get_JavaBIP_root_element(Document doc) {
@@ -91,16 +93,36 @@ public class Generate_JavaBIP_Code {
 	
 	// return the Transition (enforceable transitiions (tans_name: name, src: state , dst: state))
 	public static Transition Get_Transition(ArrayList<State> states_arraylist,Element transition_element, State init_state, char last_character_of_the_source_state,char last_character_of_the_destination) {
-		Transition t;
+		Transition t = null;
 		
 		
 		if(!Character.isDigit(last_character_of_the_source_state)) { // initial state is the init
 			if(Character.isDigit(last_character_of_the_destination)) {
 				int number_of_dst_state = Character.getNumericValue(last_character_of_the_destination);
-				 t = new Enforceable(transition_element.getAttribute(transition_name), init_state, states_arraylist.get(number_of_dst_state),null, null);
+				
+				if(transition_element.getAttribute(transition_type).equals("Internal") ) {	
+					 t = new Internal(transition_element.getAttribute(transition_name), init_state, states_arraylist.get(number_of_dst_state),null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Spontaneous")) {
+					t = new Spontaneous(transition_element.getAttribute(transition_name), init_state, states_arraylist.get(number_of_dst_state),null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Enforceable")) {
+					t = new Enforceable(transition_element.getAttribute(transition_name), init_state, states_arraylist.get(number_of_dst_state),null, null);
+				}
+				
+				 
 			}
 			else {
-				t = new Enforceable(transition_element.getAttribute(transition_name), init_state, init_state,null, null);
+				if(transition_element.getAttribute(transition_type).equals("Internal") ) {	
+					 t = new Internal(transition_element.getAttribute(transition_name), init_state, init_state,null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Spontaneous")) {
+					t = new Spontaneous(transition_element.getAttribute(transition_name), init_state, init_state,null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Enforceable")) {
+					t = new Enforceable(transition_element.getAttribute(transition_name), init_state, init_state,null, null);
+				}
+//				t = new Enforceable(transition_element.getAttribute(transition_name), init_state, init_state,null, null);
 
 			}
 		}
@@ -109,19 +131,38 @@ public class Generate_JavaBIP_Code {
 
 			if(Character.isDigit(last_character_of_the_destination)) {
 				int number_of_dst_state = Character.getNumericValue(last_character_of_the_destination);
-				t = new Enforceable(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), states_arraylist.get(number_of_dst_state),null, null);
+		
+				if(transition_element.getAttribute(transition_type).equals("Internal") ) {	
+					 t = new Internal(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), states_arraylist.get(number_of_dst_state),null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Spontaneous")) {
+					t = new Spontaneous(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), states_arraylist.get(number_of_dst_state),null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Enforceable")) {
+					t = new Enforceable(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), states_arraylist.get(number_of_dst_state),null, null);
+				}
+//				t = new Enforceable(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), states_arraylist.get(number_of_dst_state),null, null);
 			}
 			else {
-				t = new Enforceable(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), init_state,null, null);
+				if(transition_element.getAttribute(transition_type).equals("Internal") ) {	
+					 t = new Internal(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), init_state,null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Spontaneous")) {
+					t = new Spontaneous(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), init_state,null);
+				}
+				else if(transition_element.getAttribute(transition_type).equals("Enforceable")) {
+					t = new Enforceable(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), init_state,null, null);
+				}
+//				t = new Enforceable(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), init_state,null, null);
 
 			}
 		}
 		return t;
 	}
-
+	
 
 	// Create and return the transitions (enforceable transitiions (tans_name: name, src: state , dst: state))
-	public static ArrayList<Transition> Get_transitions(NodeList transitions_list, ArrayList<State> states_arraylist , State init_state) {
+	public static ArrayList<Transition> Get_transitions(NodeList transitions_list, ArrayList<State> states_arraylist , State init_state, Component com) {
 		int j; 
 		ArrayList<Transition> transitions_arraylist = new ArrayList<Transition>();
 		
@@ -139,6 +180,15 @@ public class Generate_JavaBIP_Code {
 
 			// to get the tranistion with the right source and destination
 			transitions_arraylist.add(Get_Transition(states_arraylist, transition_element,  init_state,  last_character_of_the_source_state, last_character_of_the_destination));
+			if(transition_element.getAttribute(transition_name).contains("not")){
+				ArrayList<State> filteredStates = com.removeIntermediateStates();
+				for(int k = 0; k < filteredStates.size(); k++) {
+					if(!transition_element.getAttribute(transition_name).split("_")[1].equals(filteredStates.get(k).getState_name())) {
+						transitions_arraylist.add(new Enforceable(transition_element.getAttribute(transition_name), filteredStates.get(k), filteredStates.get(k),null, null));
+					}
+				}
+//				System.out.println("here you go " + transition_element.getAttribute(transition_name) + " " + filteredStates );
+			}
 		}
 		return transitions_arraylist;
 	}
@@ -156,13 +206,15 @@ public class Generate_JavaBIP_Code {
 
 	
 	
-	private static ArrayList<Guard> Get_guards(NodeList guard_list, ArrayList<Component> components_list, Component main_controller_component) {
+	private static ArrayList<Guard> Get_guards(NodeList guard_list, ArrayList<Component> components_list) {
 		ArrayList<Guard> guards_arr = new ArrayList<Guard>();
 		Guard guard = null;
 		Component srcCom;
 		Component dstCom; 
 		State srcState; 
 		State dstState; 
+		Transition srcCmpTransition;
+		Transition dstCmpTransition;
 
 		for(int i = 0;  i < guard_list.getLength(); i++ ) {
 			Node guard_node = guard_list.item(i);
@@ -180,6 +232,8 @@ public class Generate_JavaBIP_Code {
 				dstCom = findComponentByName(guard_element.getAttribute("name").split("___")[2].split(":")[1], components_list); // taking Camera		
 				((Guard_Implies) guard).setSrcComponent(srcCom);
 				((Guard_Implies) guard).setDstComponent(dstCom);
+//				System.out.println("implies  stuff : " +srcCom.getName());
+//				System.out.println("implies stuff : " +dstCom.getName());
 //				System.out.println("component printing : "+dstCom);
 //				Example of guard method 
 //				srcFeature:Camera___dstFeature:High_Resolution___srcTransition:init_to_Camera___dstTransitionHigh_Resolution_to_High_Resolution
@@ -188,17 +242,29 @@ public class Generate_JavaBIP_Code {
 				dstState = dstCom.findStateByName(guard_element.getAttribute("guardMethod").split("___")[1].split(":")[1]); 
 				((Guard_Implies) guard).setSrcState(srcState);
 				((Guard_Implies) guard).setDstState(dstState);
-//				System.out.println("State printing : "+srcState);
+//				System.out.println("implies  stuff : " +srcState.getState_name());
+//				System.out.println("implies stuff : " +dstState.getState_name());
+				
+				srcCmpTransition = srcCom.findTransitionByName(guard_element.getAttribute("guardMethod").split("___")[2].split(":")[1]); 
+				dstCmpTransition= dstCom.findTransitionByName(guard_element.getAttribute("guardMethod").split("___")[3].split(":")[1]); 
+				guard.setSrcCmpTransition(srcCmpTransition);
+				guard.setDstCmpTransition(dstCmpTransition);
+//				System.out.println("t : "+srcCmpTransition);
+//				System.out.println("t : "+dstCmpTransition);
+				
 				guards_arr.add(guard);	
-				main_controller_component.addGuardToListOfGaurds(guard);
 			}
 			else if(guard_element.getAttribute("name").split("___")[0].equals("Exclude")) {
 				guard = new Guard_Exclude(null, null, null, null, null, null,null);
 				guard.setName(guard_element.getAttribute("name"));
 				guard.setGuardMethod(guard_element.getAttribute("guardMethod"));
-				System.out.println("Exclude stuff : " +guard_element.getAttribute("name") );
+				
+//				System.out.println("Exclude stuffsss : " +guard_element.getAttribute("name") );
+				
 				srcCom = findComponentByName(guard_element.getAttribute("name").split("___")[1].split(":")[1], components_list); 		
 				dstCom = findComponentByName(guard_element.getAttribute("name").split("___")[2].split(":")[1], components_list); 
+//				System.out.println("Exclude stuff : " +srcCom.getName());
+//				System.out.println("Exclude stuff : " +dstCom.getName());
 				((Guard_Exclude) guard).setSrcComponent(srcCom);
 				((Guard_Exclude) guard).setDstComponent(dstCom);
 				
@@ -206,9 +272,17 @@ public class Generate_JavaBIP_Code {
 				dstState = dstCom.findStateByName(guard_element.getAttribute("guardMethod").split("___")[1].split(":")[1]); 
 				((Guard_Exclude) guard).setSrcState(srcState);
 				((Guard_Exclude) guard).setDstState(dstState);
+//				System.out.println("implies  stuff : " +srcState.getState_name());
+//				System.out.println("implies stuff : " +dstState.getState_name());
+				srcCmpTransition = srcCom.findTransitionByName(guard_element.getAttribute("guardMethod").split("___")[2].split(":")[1]); 
+				dstCmpTransition= dstCom.findTransitionByName(guard_element.getAttribute("guardMethod").split("___")[3].split(":")[1]); 
+	
+				guard.setSrcCmpTransition(srcCmpTransition);
+				guard.setDstCmpTransition(dstCmpTransition);
+//				System.out.println("t : "+srcCmpTransition);
+//				System.out.println("t : "+dstCmpTransition);
 				
 				guards_arr.add(guard);	
-				main_controller_component.addGuardToListOfGaurds(guard);
 				
 			}
 		}
@@ -217,7 +291,7 @@ public class Generate_JavaBIP_Code {
 	}
 
 
-	public static Connector_Motif GetConnectorMotifs(NodeList endsList ,ArrayList<Component> components_arraylist, Element connectorMotif_element, Component main_controller_component){
+	public static Connector_Motif GetConnectorMotifs(NodeList endsList ,ArrayList<Component> components_arraylist, Element connectorMotif_element){
 		
 		Connector_Motif connector_instance  = new Connector_Motif(connectorMotif_element.getAttribute("connector_id").toString());
 		ArrayList<Transition> transitionList = new ArrayList<Transition>();
@@ -232,32 +306,24 @@ public class Generate_JavaBIP_Code {
 //			System.out.println("end "+ (i) + " :" + endElement.getAttribute("one_enforceable").lastIndexOf("@components.") );
 			
 			String[] sentences = endElement.getAttribute("one_enforceable").split("@components.");
-			indexOfTheComponent = Character.getNumericValue(sentences[1].charAt(0));
+			indexOfTheComponent = Integer.parseInt(sentences[1].split("/")[0]);
 			String[] sentences_2 = sentences[1].split("connectors.");
-			indexOfTheTransition = Character.getNumericValue(sentences_2[1].charAt(0));
+			indexOfTheTransition = Integer.parseInt(sentences_2[1].split("\"")[0]);
+			 
+//			System.out.println( "transition number : " + sentences_2[1].split("\"")[0]);
+//			
+			
 			if(endElement.getAttribute("xsi:type").equals("Trigger")) {
-//				System.out.print("this is Trigger");
-				components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition).setSynchron(true);
+//				System.out.println(components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition));
+				((Enforceable) components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition)).setSynchron(true);
 			}
 			else {
-				components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition).setSynchron(true);
+//				System.out.println(components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition));
+				((Enforceable) components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition)).setSynchron(true);
 			}
-//			System.out.println("Component number :"+ indexOfTheComponent + " Index of the transition :"+ indexOfTheTransition);
-//			System.out.println("ssss : "+ components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition).toString());
 			transitionList.add(components_arraylist.get(indexOfTheComponent).getTransitions().get(indexOfTheTransition));
 		}
-		String parts[]; 
-		String S = connector_instance.getConnector_id(); 
-		parts = S.substring(8, S.length() ).split("__________"); // init_to_Camera__________init_to_High_Resolution
-
-//		System.out.println("Array : " + parts[0].split("_to_")[1]); // camera 
-
-		Transition t = main_controller_component.getTransitionsFromXtoY("S" + parts[0].split("_to_")[1] ,main_controller_component.getInitial_state().getState_name() );
-		transitionList.add(t); // adding the transition from the main component
-		//		String S = t.getTransition_name();
-	
 		connector_instance.setRelationsList(transitionList);
-//		System.out.println("connector_id ----- : "+connector_instance.toString() );
 		return connector_instance;
 	}
 	
@@ -404,7 +470,7 @@ public class Generate_JavaBIP_Code {
 			for(int j = 0 ; j < connectorsList.get(i).getRelationsList().size();j++) {// to for each end should be connected to all other ends 
 				transition_base =  connectorsList.get(i).getRelationsList().get(j); // for motif i we take end j 
 				
-				if( transition_base.getSynchron() == true) { // this is a synchron transition
+				if( ((Enforceable) transition_base).getSynchron() == true) { // this is a synchron transition
 					
 // 					For Require				
 					glueCode.append("\t\t\t\tport(" + transition_base.getComponentOfTheTransition().getName()+"_spec.class, "+transition_base.getComponentOfTheTransition().getName()+ "_ports."+transition_base.getComponentOfTheTransition().getName()+"_p_"+transition_base.getTransition_name()+").requires(");
@@ -519,7 +585,7 @@ public class Generate_JavaBIP_Code {
 		ArrayList<Component> components_arraylist = new ArrayList<Component>();
 		try {
 			 // creating a document builder object
-			File inputFile = new File("/Users/salmanfarhat/eclipse-workspace/XMI_to_JavaBIP_Transformation/Input/ATL_NEW_TRANS_ssnew.xmi");
+			File inputFile = new File("/Users/salmanfarhat/eclipse-workspace/XMI_to_JavaBIP_Transformation_SimonV2/Input/ATL_NEW_TRANS_ssnew.xmi");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			 
@@ -578,7 +644,7 @@ public class Generate_JavaBIP_Code {
 					
 // ************************************************************** transitions **************************************************************
 					NodeList transitions_list = component_element.getElementsByTagName(transition);
-					ArrayList<Transition> transitions_arraylist = Get_transitions(transitions_list ,  c1.getStates() ,c1.getInitial_state() );
+					ArrayList<Transition> transitions_arraylist = Get_transitions(transitions_list ,  c1.getStates() ,c1.getInitial_state(),c1 );
 					c1.setTransitions(transitions_arraylist);
 					
 					for(int h = 0 ; h < transitions_arraylist.size(); h++) {
@@ -590,14 +656,8 @@ public class Generate_JavaBIP_Code {
 				 }
 			 } 
 			
+//// ************************************************************** guards **************************************************************
 
-// ************************************************************** guards **************************************************************
-//			Creating main controller
-			ArrayList<Connector_Motif> connectorsList = new ArrayList<>(); // Motifs from the one received from the ATL xml file 		
-			Component main_controller_component;
-			Main_Component main_component = new Main_Component(components_arraylist, connectorsList);
-			main_controller_component = main_component.CreateMainComponent();  // return main component spec
-			
 			Component comp;
 			ArrayList<Guard> guards_arraylist = new ArrayList<>();
 			for( i = 0; i < components_list.getLength() ; i++) { // Loop on the list of components 
@@ -605,52 +665,39 @@ public class Generate_JavaBIP_Code {
 				Node component_node = components_list.item(i);
 				if (component_node.getNodeType() == Node.ELEMENT_NODE)
 				{
+// ************************************************************** Generating guards **************************************************************
+
 					Element component_element = (Element) component_node;
 					comp = findComponentByName(component_element.getAttribute("name"), components_arraylist);
-//					System.out.println(comp.getName());
-				// create guards after i have all components created
+					// create guards after i have all components created
 					NodeList guard_list = component_element.getElementsByTagName("guards"); // take all the guards for the component comp
-					guards_arraylist = Get_guards(guard_list, components_arraylist, main_controller_component);
+					guards_arraylist = Get_guards(guard_list, components_arraylist);
 //					System.out.println(guards_arraylist);
 					for(j =0 ; j < guards_arraylist.size(); j++) {
 						guards_arraylist.get(j).setRelatedComponent(comp);
+						
 					}
 					comp.setGuards(guards_arraylist);
-//					main_controller_component.setGuards(guards_arraylist);
+					
+
 				}
 			}
 			
-			
-			for(i =0 ; i < components_arraylist.size(); i++) {
-//				
-				for(j =0 ; j < components_arraylist.get(i).getGuards().size(); j++) { // setting for each guard the main parent component
-					System.out.println(components_arraylist.get(i).getName());
-					System.out.println(components_arraylist.get(i).getGuards().get(j).toString());
-				}
-				
-//				System.out.println("guards for component : "+ components_arraylist.get(i).getName()+ " "+ components_arraylist.get(i).getGuards().toString());
-			}
-//			System.out.println("5ara "+main_controller_component.getGuards().size());
-			for(j =0 ; j < main_controller_component.getGuards().size(); j++) { // setting for each guard the main parent component
-				System.out.println("Main_controller \n"+main_controller_component.getGuards().get(j).toString());
-			}
-// *****************************************************************generate code for components *******************************************************
-			
+//// *****************************************************************generate code for components *******************************************************
+//			
 			for(int l = 0; l < components_arraylist.size(); l++) {
 				components_arraylist.get(l).GenerateCode();
 				//System.out.println(components_arraylist.get(l).toString());
 			}		
-			main_controller_component.GenerateCode();
 // ***************************************************************** Create Motifs *******************************************************
-			
-
-			components_arraylist.add(main_controller_component); // adding main component to the component array 
-
-			Connector_Motif connector;
-			
+	
+//			Connector_Motif connector;
+//			
 			NodeList connectorMotifsList = eElement_Java_BIP_project.getElementsByTagName("connector_motifs");
-			//system.out.println("number of connector motifs : " + eElement_Java_BIP_project.getElementsByTagName("connector_motifs").getLength());
-
+			System.out.println("number of connector motifs : " + eElement_Java_BIP_project.getElementsByTagName("connector_motifs").getLength());
+//
+//
+			ArrayList<Connector_Motif> connectorsList = new ArrayList<>(); // Motifs from the one received from the ATL xml file 		
 
 			for(i = 0 ; i < connectorMotifsList.getLength();i++) {
 				Node connectorMotif_node = connectorMotifsList.item(i); // get the instances of connector_motifs each one by it self
@@ -659,32 +706,19 @@ public class Generate_JavaBIP_Code {
 					Element connectorMotif_element = (Element) connectorMotif_node;
 					
 //					System.out.println(" ppp pop opo po pop op opo po op op p po p  :" + connectorMotif_element.getAttribute("connector_id"));
-					if(!connectorMotif_element.getAttribute("connector_id").split("_")[0].equals("Exclude")) {
-						NodeList endsList = connectorMotif_element.getElementsByTagName(ends); // take the ends 
+//					if(!connectorMotif_element.getAttribute("connector_id").split("_")[0].equals("Exclude")) {
+					NodeList endsList = connectorMotif_element.getElementsByTagName(ends); // take the ends 
 //						add the Motif to the List... GetConnectorMotifs Take the ends create the Motif
-						connectorsList.add(GetConnectorMotifs(endsList , components_arraylist , connectorMotif_element, main_controller_component));
-					}
+					connectorsList.add(GetConnectorMotifs(endsList , components_arraylist , connectorMotif_element));
+//					}
 					
 						//do nothing for exclude
 					
 				}
 			}
-			
-			
-// ************************ Create Main Controller and generate code *******************************************************
 
-			ArrayList<Connector_Motif> connectorsList_2 = new ArrayList<>();
-			connectorsList_2 =  main_component.GenerateConnectors(main_controller_component); 
 			
-			// filter the arraylist of connectors by removing connectors that includes implies ports c
-			connectorsList_2 = filterConnectorList(connectorsList, connectorsList_2); 
 			
-			connectorsList.addAll(connectorsList_2);
-//			for(i =0  ; i <connectorsList_2.size();i++ ) {
-//				connectorsList.add(connectorsList_2.get(i));
-//			}
-			
-
 // ************************************** Generate Glue specifications *******************************************************
 			GenerateGlue(connectorsList);
 // ***************************************************************** System Description *******************************************************
@@ -708,8 +742,7 @@ public class Generate_JavaBIP_Code {
 
 
 
-	public static void printSystemDescription(ArrayList<Component> components_arraylist,
-			ArrayList<Connector_Motif> connectorsList) {
+	public static void printSystemDescription(ArrayList<Component> components_arraylist, ArrayList<Connector_Motif> connectorsList) {
 		// TODO Auto-generated method stub
 		System.out.println("******************************************************************************************************************************************************************************");
 		System.out.println("************************************************************** System Description ********************************************************************************");
@@ -725,11 +758,7 @@ public class Generate_JavaBIP_Code {
 		}
 		
 		
-//		for( i = 0; i < connectorsList_2.size();i++) {
-//			System.out.println(connectorsList_2.get(i).toString()	);
-//		}
-//		
-		System.out.println("*********************try SGIT*********************************************************************************************************************************************************");
+		System.out.println("******************************************************************************************************************************************************************************");
 		System.out.println("*********************************************************************************************************************************************************");
 		System.out.println("******************************************************************************************************************************************************************************");
 

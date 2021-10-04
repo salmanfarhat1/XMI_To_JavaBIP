@@ -34,8 +34,22 @@ public class Guard_Implies extends Guard{
 
 	@Override
 	public String toString() {
-		return "Guard_Implies [srcState=" + srcState + ", dstState=" + dstState + ", srcComponent=" + srcComponent.getName()
-				+ ", dstComponent=" + dstComponent.getName() +" Parent name "+ this.getRelatedComponent().getName() + "]";
+		String S = "";
+
+		S += "\n\tGuard name: " + super.getName();
+		S += "\n\t\tGuard cmp name: " + this.getRelatedComponent().getName();
+		S += "\n\t\tSource state: " + srcState.getState_name();
+		S += "\n\t\tDest state: " + dstState.getState_name();
+		S += "\n\t\tSource state: " + srcComponent.getName();
+		S += "\n\t\tDest Component: " + dstComponent.getName();
+		S += "\n\t\tTransition (src comp): " + getSrcCmpTransition().getTransition_name();
+		S += "\n\t\tTransition (dst comp): " + getDstCmpTransition().getTransition_name();
+		S +="\n";
+		
+		return S;
+				
+//				"Guard_Implies [srcState=" + srcState + ", dstState=" + dstState + ", srcComponent=" + srcComponent.getName()
+//				+ ", dstComponent=" + dstComponent.getName() +" Parent name "+ this.getRelatedComponent().getName() + "]";
 		
 	}
 
