@@ -1,8 +1,5 @@
 package Code_Generatation;
 
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-
 import BIP_tools.Component;
 import BIP_tools.Enforceable;
 import BIP_tools.Guard;
@@ -14,14 +11,15 @@ import BIP_tools.Connector_Motif;
 import BIP_tools.State;
 import BIP_tools.Transition;
 
+import java.awt.TextField;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -285,6 +283,39 @@ public class Generate_JavaBIP_Code {
 				guards_arr.add(guard);	
 				
 			}
+			else { // in general (this should be the only case change the code)
+				// taking Camera
+				guard = new Guard(null, null, null);
+				guard.setName(guard_element.getAttribute("name"));
+				guard.setGuardMethod(guard_element.getAttribute("guardMethod"));
+//				System.out.println("hey ya khara shuf : " +guard_element.getAttribute("name") );
+				srcCom = findComponentByName(guard_element.getAttribute("name").split("___")[1].split(":")[1], components_list); 		
+//				dstCom = findComponentByName(guard_element.getAttribute("name").split("___")[2].split(":")[1], components_list); // taking Camera		
+//				((Guard_Implies) guard).setSrcComponent(srcCom);
+//				((Guard_Implies) guard).setDstComponent(dstCom);
+//				System.out.println("implies  stuff : " +srcCom.getName());
+//				System.out.println("implies stuff : " +dstCom.getName());
+//				System.out.println("component printing : "+dstCom);
+//				Example of guard method 
+//				srcFeature:Camera___dstFeature:High_Resolution___srcTransition:init_to_Camera___dstTransitionHigh_Resolution_to_High_Resolution
+
+				srcState = srcCom.findStateByName(guard_element.getAttribute("guardMethod").split("___")[0].split(":")[1]); 
+//				dstState = dstCom.findStateByName(guard_element.getAttribute("guardMethod").split("___")[1].split(":")[1]); 
+//				((Guard_Implies) guard).setSrcState(srcState);
+//				((Guard_Implies) guard).setDstState(dstState);
+////				System.out.println("implies  stuff : " +srcState.getState_name());
+////				System.out.println("implies stuff : " +dstState.getState_name());
+				
+				srcCmpTransition = srcCom.findTransitionByName(guard_element.getAttribute("guardMethod").split("___")[2].split(":")[1]); 
+//				dstCmpTransition= dstCom.findTransitionByName(guard_element.getAttribute("guardMethod").split("___")[3].split(":")[1]); 
+				guard.setSrcCmpTransition(srcCmpTransition);
+//				guard.setDstCmpTransition(dstCmpTransition);
+//				System.out.println("t : "+srcCmpTransition);
+//				System.out.println("t : "+dstCmpTransition);
+				
+				guards_arr.add(guard);	
+			}
+			
 		}
 		
 		return guards_arr;
@@ -557,29 +588,458 @@ public class Generate_JavaBIP_Code {
 		}
 
 	}
-//	public static Component getParentComponent(Transition t) {}
-	private static ArrayList<Connector_Motif> filterConnectorList(ArrayList<Connector_Motif> connectorsList,ArrayList<Connector_Motif> connectorsList_2) {
-		// TODO Auto-generated method stub
-		ArrayList<Connector_Motif> conn_list = new ArrayList<>();
-		String[] parts;
-		String S; 
-		for(int i= 0 ; i < connectorsList.size(); i++) {
-			
-			if("Implies".equals(connectorsList.get(i).getConnector_id().substring(0, 7))) {
-				S = connectorsList.get(i).getConnector_id();
-				parts = S.substring(8, S.length() ).split("__________"); // init_to_Camera__________init_to_High_Resolution
 
-//				System.out.println("Array : " + parts[0].split("_to_")[1]); // part[0] -> init_to_Camera ,,, ,parts[0].split("_to_")[1] --- > camera
-				for(int j = 0 ; j < connectorsList_2.size(); j++) {
-					if(!connectorsList_2.get(j).getConnector_id().contains(parts[0].split("_to_")[1])) {
-						conn_list.add(connectorsList_2.get(j));
-					}
-				}
+	private static void GenerateTestFile(ArrayList<Component> components_arraylist) {
+//		import java.awt.Button;
+//		import java.awt.Frame;
+//		import java.awt.TextField;
+//		import java.awt.event.ActionEvent;
+//		import java.awt.event.ActionListener;
+//		import java.util.Scanner;
+//		import org.javabip.annotations.Port;
+//		import org.javabip.api.BIPActor;
+//		import org.javabip.api.BIPEngine;
+//		import org.javabip.api.BIPGlue;
+//		import org.javabip.api.PortType;
+//		import org.javabip.engine.factory.EngineFactory;
+//		import akka.actor.ActorSystem;
+
+		StringBuilder glueCode = new StringBuilder();
+		
+		glueCode.append("package Output;");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(ImportsGeneration());
+		glueCode.append(System.lineSeparator());
+
+// 		public class test {
+		
+		glueCode.append("public class test {");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(System.lineSeparator());
+
+
+// 		private static BIPActor gps_1_actor;
+//		private static BIPActor calls_1_actor;
+//		private static BIPActor mp3_1_actor;
+//		private static BIPActor camera_1_actor;
+//		private static BIPActor screen_1_actor;
+		
+		for(int i = 0; i < components_arraylist.size(); i++) {
+			if(components_arraylist.get(i).getUsableComponent() == true) {
+				glueCode.append("\tprivate static BIPActor " + components_arraylist.get(i).getName()+"_1_actor;");
+				glueCode.append(System.lineSeparator());
 			}
-			
 		}
-		return conn_list; 
+		
+		glueCode.append(System.lineSeparator());
+
+//		private static ActorSystem system;
+//		private static EngineFactory engineFactory;
+//		static BIPGlue glue;
+//		static BIPEngine engine;
+		glueCode.append("\tprivate static ActorSystem system;");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\tprivate static EngineFactory engineFactory;");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\tstatic BIPGlue glue;");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\tstatic BIPEngine engine;");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(System.lineSeparator());
+
+//		private static GPS_spec gps_1;
+//		private static Calls_spec calls_1; 
+//		private static MP3_spec mp3_1;
+//		private static Camera_spec camera_1;
+//		private static Screen_spec screen_1; 
+		
+		for(int i = 0; i < components_arraylist.size(); i++) {
+			if(components_arraylist.get(i).getUsableComponent() == true) {
+				glueCode.append("\tprivate static " + components_arraylist.get(i).getName()+"_spec "+components_arraylist.get(i).getName() +"_1;");
+				glueCode.append(System.lineSeparator());
+			}
+		}
+		glueCode.append(System.lineSeparator());
+
+//		private static TextField tf;  
+//		public static void frame1() { 
+//			Frame f=new Frame();  
+		
+		glueCode.append("\tprivate static TextField tf;");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\tpublic static void frame1() { ");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tFrame f=new Frame(); ");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(System.lineSeparator());
+		
+		
+		
+
+//		Button button_select_calls=new Button("Select Calls");  
+// 		Button button_unselect_calls=new Button("Unselect Calls ");  
+		
+//		Button button_select_GPS=new Button("Select GPS");  
+//		Button button_unselect_GPS=new Button("Unselect GPS ");  
+//		
+//		Button button_select_camera=new Button("Select camera");  
+//		Button button_unselect_camera=new Button("Unselect camera "); 
+//		
+//		Button button_select_mp3=new Button("Select mp3");  
+//		Button button_unselect_mp3=new Button("Unselect mp3 "); 
+//		
+//		Button button_select_h_r=new Button("Select H_R");  
+//		Button button_unselect_h_r=new Button("Unselect H_R "); 
+//		
+//		Button button_select_basic=new Button("Select basic");  
+//		Button button_unselect_basic=new Button("Unselect basic "); 
+//		
+//		Button button_select_colour=new Button("Select colour");  
+//		Button button_unselect_colour=new Button("Unselect colour ");
+		State state_filtered; 
+		for(int i=0; i <components_arraylist.size(); i++) { // move on all components
+			if(components_arraylist.get(i).getUsableComponent() == false)
+				continue;
+			for(int j =0 ; j < components_arraylist.get(i).removeIntermediateStates().size(); j++) { // move on all the filtered states of the component i
+				state_filtered = components_arraylist.get(i).removeIntermediateStates().get(j);
+				glueCode.append("\t\tButton button_select_" + state_filtered.getState_name() + " = new Button(\"Select " +state_filtered.getState_name() +"\");" );
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\tButton button_unselect_" + state_filtered.getState_name()  + " = new Button(\"Unselect " +state_filtered.getState_name() +"\");" );
+				glueCode.append(System.lineSeparator());
+			}
+			glueCode.append(System.lineSeparator());
+		} 
+//		x, y, width, height
+//		button_select_calls.setBounds(20,50,130,30); 
+//		button_select_GPS.setBounds(180, 50, 130, 30);
+//		button_select_mp3.setBounds(340, 50, 130, 30);
+//		button_select_camera.setBounds(500, 50, 130, 30);
+//		button_select_h_r.setBounds(660, 50, 130, 30); // 500 660 820 980 1140 1300
+//		button_select_basic.setBounds(820, 50, 130, 30); // 500 660 820 980 1140 1300
+//		button_select_colour.setBounds(980, 50, 130, 30); // 500 660 820 980 1140 1300
+//		
+//		button_unselect_calls.setBounds(20,100,130,30); 
+//		button_unselect_GPS.setBounds(180,100,130,30); 
+//		button_unselect_mp3.setBounds(340, 100, 130, 30);
+//		button_unselect_camera.setBounds(500,100,130,30);
+//		button_unselect_h_r.setBounds(660,100,130,30);
+//		button_unselect_basic.setBounds(820,100,130,30);
+//		button_unselect_colour.setBounds(980,100,130,30);
+		
+		int width = 130;
+		int height =30; 
+		int x_select =20; 
+		int y_select = 50;
+		int x_reset =20; 
+		int y_reset = 100;
+		
+		for(int i=0; i <components_arraylist.size(); i++) { // move on all components
+			if(components_arraylist.get(i).getUsableComponent() == false)
+				continue;
+			for(int j =0 ; j < components_arraylist.get(i).removeIntermediateStates().size(); j++) { // move on all the filtered states of the component i
+				
+				state_filtered = components_arraylist.get(i).removeIntermediateStates().get(j);
+				glueCode.append("\t\tbutton_select_" + state_filtered.getState_name() + ".setBounds(" + x_select +", "+y_select +", "+width+", "+height+");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\tbutton_unselect_" + state_filtered.getState_name() + ".setBounds(" + x_reset +", "+y_reset +", "+width+", "+height+");");
+				glueCode.append(System.lineSeparator());
+				x_select += 160;
+				x_reset += 160;
+			}
+			glueCode.append(System.lineSeparator());
+		} 
+		
+		
+//		tf = new TextField();  
+//		tf.setBounds(400,150,270,40);  
+		glueCode.append("\t\ttf = new TextField(); ");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\ttf.setBounds(400,150,270,40); ");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(System.lineSeparator());
+
+		
+		
+//		button_select_calls.addActionListener( new ActionListener() {
+//		public void actionPerformed(ActionEvent e) {
+//			System.out.println("********************************** ********************************** ********************************** ");
+//			System.out.println("********************************** Selecting Calls ********************************** ");
+//			System.out.println("********************************** ********************************** ********************************** ");
+//			tf.setText("Selecting Calls.... result in terminal");
+//			calls_1_actor.inform(Calls_ports.Calls_p_SCalls);
+//		}
+//	});		
+//	button_unselect_calls.addActionListener( new ActionListener() {
+//		public void actionPerformed(ActionEvent e) {
+//			System.out.println("********************************** ********************************** ********************************** ");
+//			System.out.println("********************************** UnSelecting Calls ********************************** ");
+//			System.out.println("********************************** ********************************** ********************************** ");
+//			tf.setText("Unselecting Calls ... result in terminal");
+//			calls_1_actor.inform(Calls_ports.Calls_p_SCalls_reset);
+//		}
+//	});
+// etc... 
+		
+		for(int i=0; i <components_arraylist.size(); i++) { // move on all components
+			if(components_arraylist.get(i).getUsableComponent() == false)
+				continue;
+			for(int j =0 ; j < components_arraylist.get(i).removeIntermediateStates().size(); j++) { // move on all the filtered states of the component i
+				
+				state_filtered = components_arraylist.get(i).removeIntermediateStates().get(j);
+				glueCode.append("\t\tbutton_select_" + state_filtered.getState_name() + ".addActionListener( new ActionListener() {");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\tpublic void actionPerformed(ActionEvent e) {");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\tSystem.out.println(\"********************************** ********************************** ********************************** \");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\tSystem.out.println(\"********************************** Selecting "+state_filtered.getState_name() + " ********************************** \");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\tSystem.out.println(\"********************************** ********************************** ********************************** \");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\ttf.setText(\"Selecting "+ state_filtered.getState_name() +" ... result in terminal\");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\t"+components_arraylist.get(i).getName()+"_1_actor.inform("+ components_arraylist.get(i).getName() +"_ports."+components_arraylist.get(i).getName()+"_p_S"+state_filtered.getState_name()+");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t}");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t});");
+				
+				
+				glueCode.append(System.lineSeparator());
+				glueCode.append(System.lineSeparator());
+				glueCode.append(System.lineSeparator());
+
+				
+				
+				glueCode.append("\t\tbutton_unselect_" +  state_filtered.getState_name()  + ".addActionListener( new ActionListener() {");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\tpublic void actionPerformed(ActionEvent e) {");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\tSystem.out.println(\"********************************** ********************************** ********************************** \");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\tSystem.out.println(\"********************************** UnSelecting "+state_filtered.getState_name() + " ********************************** \");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\tSystem.out.println(\"********************************** ********************************** ********************************** \");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\ttf.setText(\"Unselecting "+ state_filtered.getState_name() +" ... result in terminal\");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t\t"+components_arraylist.get(i).getName()+"_1_actor.inform("+ components_arraylist.get(i).getName() +"_ports."+components_arraylist.get(i).getName()+"_p_S"+state_filtered.getState_name()+"_reset);");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t\t}");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\t});");
+				glueCode.append(System.lineSeparator());
+		
+			}
+			glueCode.append(System.lineSeparator());
+		} 
+		
+		
+//		f.add(button_select_calls);
+//		f.add(button_unselect_calls);
+//	
+//		f.add(button_select_GPS);  
+//		f.add(button_unselect_GPS); 
+		
+		for(int i=0; i <components_arraylist.size(); i++) { // move on all components
+			if(components_arraylist.get(i).getUsableComponent() == false)
+				continue;
+			for(int j =0 ; j < components_arraylist.get(i).removeIntermediateStates().size(); j++) { // move on all the filtered states of the component i
+				
+				state_filtered = components_arraylist.get(i).removeIntermediateStates().get(j);
+				glueCode.append("\t\tf.add(button_select_" + state_filtered.getState_name()+  ");");
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\tf.add(button_unselect_" + state_filtered.getState_name()+  ");");
+				glueCode.append(System.lineSeparator());
+				
+			}
+			glueCode.append(System.lineSeparator());
+		} 
+
+//		f.add(tf);	
+//		f.setSize(1150,600);  
+//		f.setLayout(null);  
+//		f.setVisible(true); 
+		glueCode.append("\t\tf.add(tf);");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tf.setSize(1150,600); ");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tf.setLayout(null);");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tf.setVisible(true);");
+		glueCode.append(System.lineSeparator());
+		
+//	}
+		glueCode.append("\t}");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(System.lineSeparator());
+
+		
+		
+//		public static void main(String[] args) {
+//			// TODO Auto-generated method stub
+//			System.out.println("*************** Example Safe Dynamic reconfiguration  ***************");
+//			setUpBIP();
+//			
+//		}
+		glueCode.append("\tpublic static void main(String[] args) {");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tSystem.out.println(\"*************** Example Safe Dynamic reconfiguration  ***************\");");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tsetUpBIP();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t}");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(System.lineSeparator());
+
+		
+//		public static void setUpBIP() {
+//		system = ActorSystem.create("MySystem");
+//        engineFactory = new EngineFactory(system);
+//        
+//        glue = new Project_Glue().getBipGlue();
+//        
+//        engine = engineFactory.create("Engine", glue); // attached the glue to the engine
+		
+		glueCode.append("\tpublic static void setUpBIP() {");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tsystem = ActorSystem.create(\"MySystem\");");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tengineFactory = new EngineFactory(system);");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tglue = new Project_Glue().getBipGlue();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tengine = engineFactory.create(\"Engine\", glue); // attached the glue to the engine");
+		glueCode.append(System.lineSeparator());
+		glueCode.append(System.lineSeparator());
+
+
+//      gps_1 = new GPS_spec();
+//      calls_1 = new Calls_spec();
+//      mp3_1 = new MP3_spec();
+//      camera_1 = new Camera_spec();
+//      screen_1 = new Screen_spec();
+//      
+		for(int i=0; i <components_arraylist.size(); i++) { // move on all components
+			if(components_arraylist.get(i).getUsableComponent() == false)
+				continue;
+			glueCode.append("\t\t" + components_arraylist.get(i).getName() + "_1 = new "+  components_arraylist.get(i).getName()+"_spec();" );
+			glueCode.append(System.lineSeparator());
+		} 
+		
+//      
+//      gps_1_actor = engine.register(gps_1, "GPS_component", true); 
+//      calls_1_actor = engine.register(calls_1, "Calls_component", true); 
+//      mp3_1_actor = engine.register(mp3_1, "mp3_component", true); 
+//      camera_1_actor = engine.register(camera_1, "camera_component", true);  
+//      screen_1_actor = engine.register(screen_1, "Screen_component", true); 
+//      
+		glueCode.append(System.lineSeparator());
+
+		
+		for(int i=0; i <components_arraylist.size(); i++) { // move on all components
+			if(components_arraylist.get(i).getUsableComponent() == false)
+				continue;
+			glueCode.append("\t\t" + components_arraylist.get(i).getName() + "_1_actor = engine.register("+  components_arraylist.get(i).getName()+"_1, \"" +  components_arraylist.get(i).getName()+"_component\", true);" );
+			glueCode.append(System.lineSeparator());
+		} 
+		glueCode.append(System.lineSeparator());
+
+		
+//      int n = 1, option = 0; 
+//		engine.start();
+//		engine.execute();
+//		frame1();
+//		Scanner sc = new Scanner(System.in);
+
+//		while(n == 1) {
+//			System.out.println("Use the user interface");	
+//			option = sc.nextInt();
+//		}
+//		
+//		try {
+//				Thread.sleep(10000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		
+//		engine.stop();
+//		engineFactory.destroy(engine);
+//		
+//		System.out.println("The engine is stopped, satisfied?");
+//		
+//	}
+//
+//}
+		glueCode.append("\t\tint n = 1, option = 0; ");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tengine.start();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tengine.execute();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tframe1();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tScanner sc = new Scanner(System.in);");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\twhile(n == 1) {");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\t\tSystem.out.println(\"Use the user interface\");	");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\t\toption = sc.nextInt();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\t}");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\ttry {");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\t\tThread.sleep(10000);");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\t} catch (InterruptedException e) {");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\t\te.printStackTrace();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\t}");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tengine.stop();");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tengineFactory.destroy(engine);");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t\tSystem.out.println(\"The engine is stopped, satisfied?\");");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("\t}");
+		glueCode.append(System.lineSeparator());
+		glueCode.append("}");
+		glueCode.append(System.lineSeparator());
+		
+
+		
+		try (FileOutputStream oS = new FileOutputStream(new File("./Output/"+"test.java"))) {
+			oS.write(glueCode.toString().getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
+	private static String ImportsGeneration() {	
+		String S ="";
+		S += "import java.awt.Button;\n";
+		S += "import java.awt.Frame;\n";
+		S += "import java.awt.TextField;\n";
+		S += "import java.awt.event.ActionEvent;\n";
+		S += "import java.awt.event.ActionListener;\n";
+		S += "import java.util.Scanner;\n";
+		S += "import org.javabip.annotations.Port;\n";
+		S += "import org.javabip.api.BIPActor;\n";
+		S += "import org.javabip.api.BIPEngine;\n";
+		S += "import org.javabip.api.BIPGlue;\n";
+		S += "import org.javabip.api.PortType;\n";
+		S += "import org.javabip.engine.factory.EngineFactory;\n";
+		S += "import akka.actor.ActorSystem;\n";
+		
+		return S;
+	}
+
+
 	public static void main(String[] args){
 		int i,j;
 		ArrayList<Component> components_arraylist = new ArrayList<Component>();
@@ -686,6 +1146,8 @@ public class Generate_JavaBIP_Code {
 //// *****************************************************************generate code for components *******************************************************
 //			
 			for(int l = 0; l < components_arraylist.size(); l++) {
+				if(components_arraylist.get(l).getUsableComponent() == false)
+					continue; 
 				components_arraylist.get(l).GenerateCode();
 				//System.out.println(components_arraylist.get(l).toString());
 			}		
@@ -695,8 +1157,6 @@ public class Generate_JavaBIP_Code {
 //			
 			NodeList connectorMotifsList = eElement_Java_BIP_project.getElementsByTagName("connector_motifs");
 			System.out.println("number of connector motifs : " + eElement_Java_BIP_project.getElementsByTagName("connector_motifs").getLength());
-//
-//
 			ArrayList<Connector_Motif> connectorsList = new ArrayList<>(); // Motifs from the one received from the ATL xml file 		
 
 			for(i = 0 ; i < connectorMotifsList.getLength();i++) {
@@ -704,16 +1164,8 @@ public class Generate_JavaBIP_Code {
 				if (connectorMotif_node.getNodeType() == Node.ELEMENT_NODE)
 				{
 					Element connectorMotif_element = (Element) connectorMotif_node;
-					
-//					System.out.println(" ppp pop opo po pop op opo po op op p po p  :" + connectorMotif_element.getAttribute("connector_id"));
-//					if(!connectorMotif_element.getAttribute("connector_id").split("_")[0].equals("Exclude")) {
 					NodeList endsList = connectorMotif_element.getElementsByTagName(ends); // take the ends 
-//						add the Motif to the List... GetConnectorMotifs Take the ends create the Motif
 					connectorsList.add(GetConnectorMotifs(endsList , components_arraylist , connectorMotif_element));
-//					}
-					
-						//do nothing for exclude
-					
 				}
 			}
 
@@ -721,6 +1173,12 @@ public class Generate_JavaBIP_Code {
 			
 // ************************************** Generate Glue specifications *******************************************************
 			GenerateGlue(connectorsList);
+			
+			
+// ************************************** Create the test java file *******************************************************
+			GenerateTestFile(components_arraylist);
+			
+			
 // ***************************************************************** System Description *******************************************************
 // ******************************************************************************************************************************
 // ******************************************************************************************************************************
@@ -734,10 +1192,15 @@ public class Generate_JavaBIP_Code {
 // ******************************************************************************************************************************
 // ******************************************************************************************************************************
 // ******************************************************************************************************************************
+			
+			
+			
 	      }catch (Exception e) {
 	         e.printStackTrace();
 	      }
 	}
+
+
 
 
 

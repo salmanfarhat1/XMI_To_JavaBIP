@@ -1,8 +1,12 @@
 package BIP_tools;
 
+import java.io.File;
+
 public class Guard {
 	private String name;
 	private String guardMethod;
+
+
 	private Component relatedComponent; 
 	private Enforceable srcCmpTransition; 
 	private Enforceable dstCmpTransition; 
@@ -51,5 +55,18 @@ public class Guard {
 	public void setDstCmpTransition(Transition dstCmpTransition) {
 		this.dstCmpTransition = (Enforceable) dstCmpTransition;
 	}
+	@Override
+	public String toString() {
+		String S =""; 
+		S += "\n\tGuard name: " + name;
+		S += "\n\t\tGuard cmp name: " + this.getRelatedComponent().getName();
+		S += "\n\t\tTransition (src comp): " + srcCmpTransition.getTransition_name();
+		S +="\n";
+		return S; 
+		
+	//	return "Guard [name=" + name + ", guardMethod=" + guardMethod +", srcCmpTransition=" + srcCmpTransition +  "]";
+	}
+
+
 	
 }

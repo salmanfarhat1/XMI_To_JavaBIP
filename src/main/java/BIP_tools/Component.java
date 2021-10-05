@@ -279,7 +279,20 @@ public class Component {
 				else {
 						starting_constaints.put(findStateByName( ((Guard_Exclude) guards.get(i)).getDstState().getState_name()), true);	
 				} 	
-			}			
+			}
+			else {
+				if(name.equals( guards.get(i).getSrcCmpTransition().getComponentOfTheTransition().getName())){ // if the component is the source one 
+					
+//					System.out.println("---------> " + (guards.get(i)).getSrcCmpTransition().getTransition_name().substring(2));
+
+					if(guards.get(i).getSrcCmpTransition().getTransition_name().contains("reset")) {
+						reseting_constaints.put(findStateByName( (guards.get(i)).getSrcCmpTransition().getSrc().getState_name().substring(2)), true);
+					}
+					else {
+						starting_constaints.put(findStateByName( ((guards.get(i)).getSrcCmpTransition().getDst().getState_name())), true);
+					}
+				}
+			}
 		}	
 		System.out.println("Component name: " + name + " guards for start features: "+starting_constaints);
 		System.out.println("Component name: " + name + " guards for reset features: "+reseting_constaints);
