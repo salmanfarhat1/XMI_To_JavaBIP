@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Feature_model
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://fr.wikipedia.org/wiki/Feature_model"
+    xsi:schemaLocation="https://fr.wikipedia.org/wiki/Feature_model ../MetaModels/Feature_MM.ecore">
+  <root name="RandomFM">
+    <SubFeatures
+        name="f3f">
+      <SubFeatures
+          xsi:type="Alternative"
+          name="f4f"/>
+      <SubFeatures
+          xsi:type="Alternative"
+          name="f5f"/>
+    </SubFeatures>
+    <SubFeatures
+        name="f7f"/>
+    <SubFeatures
+        name="f1f"/>
+    <SubFeatures
+        name="f2f"/>
+    <SubFeatures
+        name="f6f"/>
+    <SubFeatures
+        name="f8f"/>
+    <SubFeatures
+        name="f9f"/>
+  </root>
+</Feature_model>

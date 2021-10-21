@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Feature_model
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://fr.wikipedia.org/wiki/Feature_model"
+    xsi:schemaLocation="https://fr.wikipedia.org/wiki/Feature_model ../MetaModels/Feature_MM.ecore">
+  <root name="Mobile_Phone">
+    <SubFeatures
+        name="Calls"/>
+    <SubFeatures
+        name="Media">
+      <SubFeatures
+          xsi:type="Alternative"
+          name="Camera"/>
+      <SubFeatures
+          xsi:type="Alternative"
+          name="MP3"/>
+    </SubFeatures>
+    <SubFeatures
+        name="Screen">
+      <SubFeatures
+          xsi:type="Exclusive"
+          name="Basic"/>
+      <SubFeatures
+          xsi:type="Exclusive"
+          name="Colour"/>
+      <SubFeatures
+          xsi:type="Exclusive"
+          name="High_Resolution"/>
+    </SubFeatures>
+    <SubFeatures
+        name="GPS"
+        optional="true"/>
+  </root>
+  <constraints
+      xsi:type="Implies"
+      F_From="//@root/@SubFeatures.1/@SubFeatures.0"
+      F_to="//@root/@SubFeatures.2/@SubFeatures.2"/>
+  <constraints
+      xsi:type="Exclude"
+      F_From="//@root/@SubFeatures.3"
+      F_to="//@root/@SubFeatures.2/@SubFeatures.0"/>
+</Feature_model>

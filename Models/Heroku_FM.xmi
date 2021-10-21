@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Feature_model
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://fr.wikipedia.org/wiki/Feature_model"
+    xsi:schemaLocation="https://fr.wikipedia.org/wiki/Feature_model ../MetaModels/Feature_MM.ecore">
+  <root name="Heroku">
+    <SubFeatures
+        name="Application">
+      <SubFeatures
+          name="Process_type">
+        <SubFeatures
+            name="Dyno">
+          <SubFeatures
+              xsi:type="Exclusive"
+              name="Free"/>
+          <SubFeatures
+              xsi:type="Exclusive"
+              name="Hobby"/>
+          <SubFeatures
+              xsi:type="Exclusive"
+              name="Production_tier">
+            <SubFeatures
+                xsi:type="Alternative"
+                name="PerformanceL"/>
+            <SubFeatures
+                xsi:type="Alternative"
+                name="PerformanceM"/>
+            <SubFeatures
+                xsi:type="Alternative"
+                name="StandardX1"/>
+            <SubFeatures
+                xsi:type="Alternative"
+                name="StandardM"/>
+          </SubFeatures>
+        </SubFeatures>
+        <SubFeatures
+            name="Type">
+          <SubFeatures
+              xsi:type="Alternative"
+              name="Web"/>
+          <SubFeatures
+              xsi:type="Alternative"
+              name="Worker"/>
+        </SubFeatures>
+      </SubFeatures>
+    </SubFeatures>
+  </root>
+</Feature_model>

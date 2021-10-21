@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Java_BIP_project xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.bliudze.me/simon/2021/01/compounds/">
+  <components name="Camera" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="Camera"/>
+    <states_link_to_State_Base state_name="SCamera"/>
+    <states_link_to_State_Base state_name="SRCamera"/>
+    <initial_s state_name="init"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera" src="//@components.0/@initial_s" dst="//@components.0/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera_reset" src="//@components.0/@states_link_to_State_Base.0" dst="//@components.0/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera" src="//@components.0/@states_link_to_State_Base.1" dst="//@components.0/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera_reset" src="//@components.0/@states_link_to_State_Base.2" dst="//@components.0/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera" src="//@components.0/@states_link_to_State_Base.1" dst="//@components.0/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera_reset" src="//@components.0/@states_link_to_State_Base.2" dst="//@components.0/@initial_s" in_connector_end="//@connector_motifs.1/@ends.0"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera_to_Camera" src="//@components.0/@states_link_to_State_Base.0" dst="//@components.0/@states_link_to_State_Base.0" in_connector_end="//@connector_motifs.0/@ends.1"/>
+    <guards name="Implies___srcComponent:Screen___dstComponnt:Camera" guardMethod="srcFeature:Colour___dstFeature:Camera___srcTransition:not_Colour_implies_Colour_Camera___dstTransition:Camera_reset"/>
+  </components>
+  <components name="GPS" optional="true" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="GPS"/>
+    <states_link_to_State_Base state_name="SRGPS"/>
+    <states_link_to_State_Base state_name="SGPS"/>
+    <initial_s state_name="init"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS" src="//@components.1/@initial_s" dst="//@components.1/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS_reset" src="//@components.1/@states_link_to_State_Base.0" dst="//@components.1/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS" src="//@components.1/@states_link_to_State_Base.2" dst="//@components.1/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS_reset" src="//@components.1/@states_link_to_State_Base.1" dst="//@components.1/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS" src="//@components.1/@states_link_to_State_Base.2" dst="//@components.1/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS_reset" src="//@components.1/@states_link_to_State_Base.1" dst="//@components.1/@initial_s"/>
+  </components>
+  <components name="Calls" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="SCalls"/>
+    <states_link_to_State_Base state_name="Calls"/>
+    <states_link_to_State_Base state_name="SRCalls"/>
+    <initial_s state_name="init"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls" src="//@components.2/@initial_s" dst="//@components.2/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls_reset" src="//@components.2/@states_link_to_State_Base.1" dst="//@components.2/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls" src="//@components.2/@states_link_to_State_Base.0" dst="//@components.2/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls_reset" src="//@components.2/@states_link_to_State_Base.2" dst="//@components.2/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls" src="//@components.2/@states_link_to_State_Base.0" dst="//@components.2/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls_reset" src="//@components.2/@states_link_to_State_Base.2" dst="//@components.2/@initial_s"/>
+  </components>
+  <components name="MP3" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="MP3"/>
+    <states_link_to_State_Base state_name="SMP3"/>
+    <states_link_to_State_Base state_name="SRMP3"/>
+    <initial_s state_name="init"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3" src="//@components.3/@initial_s" dst="//@components.3/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3_reset" src="//@components.3/@states_link_to_State_Base.0" dst="//@components.3/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3_reset" src="//@components.3/@states_link_to_State_Base.2" dst="//@components.3/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3_reset" src="//@components.3/@states_link_to_State_Base.2" dst="//@components.3/@initial_s"/>
+  </components>
+  <components name="Media" usableComponent="false" correspondsTo="or">
+    <states_link_to_State_Base state_name="MP3"/>
+    <states_link_to_State_Base state_name="Camera"/>
+    <states_link_to_State_Base state_name="SMP3"/>
+    <states_link_to_State_Base state_name="SCamera"/>
+    <states_link_to_State_Base state_name="SRMP3"/>
+    <states_link_to_State_Base state_name="SRCamera"/>
+    <initial_s state_name="init"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera" src="//@components.4/@initial_s" dst="//@components.4/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3" src="//@components.4/@initial_s" dst="//@components.4/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera_reset" src="//@components.4/@states_link_to_State_Base.1" dst="//@components.4/@states_link_to_State_Base.5"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3_reset" src="//@components.4/@states_link_to_State_Base.0" dst="//@components.4/@states_link_to_State_Base.4"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera" src="//@components.4/@states_link_to_State_Base.3" dst="//@components.4/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3" src="//@components.4/@states_link_to_State_Base.2" dst="//@components.4/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera_reset" src="//@components.4/@states_link_to_State_Base.5" dst="//@components.4/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3_reset" src="//@components.4/@states_link_to_State_Base.4" dst="//@components.4/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera" src="//@components.4/@states_link_to_State_Base.3" dst="//@components.4/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3" src="//@components.4/@states_link_to_State_Base.2" dst="//@components.4/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera_reset" src="//@components.4/@states_link_to_State_Base.5" dst="//@components.4/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3_reset" src="//@components.4/@states_link_to_State_Base.4" dst="//@components.4/@initial_s"/>
+  </components>
+  <components name="Screen" usableComponent="true" correspondsTo="and">
+    <states_link_to_State_Base state_name="Colour"/>
+    <states_link_to_State_Base state_name="High_Resolution"/>
+    <states_link_to_State_Base state_name="Basic"/>
+    <states_link_to_State_Base state_name="SColour"/>
+    <states_link_to_State_Base state_name="SHigh_Resolution"/>
+    <states_link_to_State_Base state_name="SBasic"/>
+    <states_link_to_State_Base state_name="SRColour"/>
+    <states_link_to_State_Base state_name="SRHigh_Resolution"/>
+    <states_link_to_State_Base state_name="SRBasic"/>
+    <initial_s state_name="init"/>
+    <connectors xsi:type="Spontaneous" transition_name="SBasic" src="//@components.5/@initial_s" dst="//@components.5/@states_link_to_State_Base.5"/>
+    <connectors xsi:type="Spontaneous" transition_name="SColour" src="//@components.5/@initial_s" dst="//@components.5/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Spontaneous" transition_name="SHigh_Resolution" src="//@components.5/@initial_s" dst="//@components.5/@states_link_to_State_Base.4"/>
+    <connectors xsi:type="Spontaneous" transition_name="SBasic_reset" src="//@components.5/@states_link_to_State_Base.2" dst="//@components.5/@states_link_to_State_Base.8"/>
+    <connectors xsi:type="Spontaneous" transition_name="SColour_reset" src="//@components.5/@states_link_to_State_Base.0" dst="//@components.5/@states_link_to_State_Base.6"/>
+    <connectors xsi:type="Spontaneous" transition_name="SHigh_Resolution_reset" src="//@components.5/@states_link_to_State_Base.1" dst="//@components.5/@states_link_to_State_Base.7"/>
+    <connectors xsi:type="Internal" transition_name="internal_Basic" src="//@components.5/@states_link_to_State_Base.5" dst="//@components.5/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Colour" src="//@components.5/@states_link_to_State_Base.3" dst="//@components.5/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_High_Resolution" src="//@components.5/@states_link_to_State_Base.4" dst="//@components.5/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_Basic_reset" src="//@components.5/@states_link_to_State_Base.8" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_Colour_reset" src="//@components.5/@states_link_to_State_Base.6" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_High_Resolution_reset" src="//@components.5/@states_link_to_State_Base.7" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Basic" src="//@components.5/@states_link_to_State_Base.5" dst="//@components.5/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Enforceable" transition_name="Colour" src="//@components.5/@states_link_to_State_Base.3" dst="//@components.5/@states_link_to_State_Base.0" in_connector_end="//@connector_motifs.0/@ends.0"/>
+    <connectors xsi:type="Enforceable" transition_name="High_Resolution" src="//@components.5/@states_link_to_State_Base.4" dst="//@components.5/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="Basic_reset" src="//@components.5/@states_link_to_State_Base.8" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Colour_reset" src="//@components.5/@states_link_to_State_Base.6" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="High_Resolution_reset" src="//@components.5/@states_link_to_State_Base.7" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="not_Colour_implies_Colour_Camera" src="//@components.5/@initial_s" dst="//@components.5/@initial_s" in_connector_end="//@connector_motifs.1/@ends.1"/>
+    <guards name="Implies___srcComponent:Screen___dstComponnt:Camera" guardMethod="srcFeature:Colour___dstFeature:Camera___srcTransition:Colour___dstTransition:Camera_to_Camera"/>
+  </components>
+  <components name="Mobile_Phone" usableComponent="false" correspondsTo="normal">
+    <states_link_to_State_Base state_name="Screen"/>
+    <states_link_to_State_Base state_name="GPS"/>
+    <states_link_to_State_Base state_name="Calls"/>
+    <states_link_to_State_Base state_name="Media"/>
+    <states_link_to_State_Base state_name="SScreen"/>
+    <states_link_to_State_Base state_name="SGPS"/>
+    <states_link_to_State_Base state_name="SCalls"/>
+    <states_link_to_State_Base state_name="SMedia"/>
+    <states_link_to_State_Base state_name="SRScreen"/>
+    <states_link_to_State_Base state_name="SRGPS"/>
+    <states_link_to_State_Base state_name="SRCalls"/>
+    <states_link_to_State_Base state_name="SRMedia"/>
+    <initial_s state_name="init"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.6"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMedia" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.7"/>
+    <connectors xsi:type="Spontaneous" transition_name="SScreen" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.4"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.5"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls_reset" src="//@components.6/@states_link_to_State_Base.2" dst="//@components.6/@states_link_to_State_Base.10"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMedia_reset" src="//@components.6/@states_link_to_State_Base.3" dst="//@components.6/@states_link_to_State_Base.11"/>
+    <connectors xsi:type="Spontaneous" transition_name="SScreen_reset" src="//@components.6/@states_link_to_State_Base.0" dst="//@components.6/@states_link_to_State_Base.8"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS_reset" src="//@components.6/@states_link_to_State_Base.1" dst="//@components.6/@states_link_to_State_Base.9"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls" src="//@components.6/@states_link_to_State_Base.6" dst="//@components.6/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Media" src="//@components.6/@states_link_to_State_Base.7" dst="//@components.6/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Internal" transition_name="internal_Screen" src="//@components.6/@states_link_to_State_Base.4" dst="//@components.6/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS" src="//@components.6/@states_link_to_State_Base.5" dst="//@components.6/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls_reset" src="//@components.6/@states_link_to_State_Base.10" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_Media_reset" src="//@components.6/@states_link_to_State_Base.11" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_Screen_reset" src="//@components.6/@states_link_to_State_Base.8" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS_reset" src="//@components.6/@states_link_to_State_Base.9" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls" src="//@components.6/@states_link_to_State_Base.6" dst="//@components.6/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Enforceable" transition_name="Media" src="//@components.6/@states_link_to_State_Base.7" dst="//@components.6/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Enforceable" transition_name="Screen" src="//@components.6/@states_link_to_State_Base.4" dst="//@components.6/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS" src="//@components.6/@states_link_to_State_Base.5" dst="//@components.6/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls_reset" src="//@components.6/@states_link_to_State_Base.10" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Media_reset" src="//@components.6/@states_link_to_State_Base.11" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Screen_reset" src="//@components.6/@states_link_to_State_Base.8" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS_reset" src="//@components.6/@states_link_to_State_Base.9" dst="//@components.6/@initial_s"/>
+  </components>
+  <connector_motifs connector_id="Implies_Colour__________Camera_to_Camera">
+    <ends xsi:type="Trigger" one_enforceable="//@components.5/@connectors.13" description="o_3 this is the port of the component: Screen from state :SColour to state :Colour"/>
+    <ends xsi:type="Trigger" one_enforceable="//@components.0/@connectors.6" description="this is the port of the component: Camera from state :Camera to state :Camera"/>
+  </connector_motifs>
+  <connector_motifs connector_id="Implies_Camera_reset__________not_Colour_implies_Colour_Camera">
+    <ends xsi:type="Trigger" one_enforceable="//@components.0/@connectors.5" description="o_2 this is the port of the component: Camera from state :SRCamera to state :init"/>
+    <ends xsi:type="Trigger" one_enforceable="//@components.5/@connectors.18" description="this is the port of the component: Screen from state :init to state :init"/>
+  </connector_motifs>
+</Java_BIP_project>
