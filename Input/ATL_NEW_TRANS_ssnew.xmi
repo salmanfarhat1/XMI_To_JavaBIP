@@ -1,260 +1,155 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.bliudze.me/simon/2021/01/compounds/">
 <Java_BIP_project>
-   <components name="PerformanceL" usableComponent="true" correspondsTo="normal">
-    <states_link_to_State_Base state_name="SRPerformanceL"/>
-    <states_link_to_State_Base state_name="PerformanceL"/>
-    <states_link_to_State_Base state_name="SPerformanceL"/>
+  <components name="Camera" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="Camera"/>
+    <states_link_to_State_Base state_name="SCamera"/>
+    <states_link_to_State_Base state_name="SRCamera"/>
     <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceL" src="//@components.0/@initial_s" dst="//@components.0/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceL_reset" src="//@components.0/@states_link_to_State_Base.1" dst="//@components.0/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceL" src="//@components.0/@states_link_to_State_Base.2" dst="//@components.0/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceL_reset" src="//@components.0/@states_link_to_State_Base.0" dst="//@components.0/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceL" src="//@components.0/@states_link_to_State_Base.2" dst="//@components.0/@states_link_to_State_Base.1" in_connector_end="//@connector_motifs.4/@ends.1"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceL_reset" src="//@components.0/@states_link_to_State_Base.0" dst="//@components.0/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="not_PerformanceL_Hierarchical_PerformanceL_Dyno" src="//@components.0/@initial_s" dst="//@components.0/@initial_s" in_connector_end="//@connector_motifs.1/@ends.1"/>
-    <guards name="Hierarchical___srcComponent:PerformanceL___dstComponnt:Dyno" guardMethod="srcFeature:PerformanceL___dstFeature:Production_tier___srcTransition:PerformanceL___dstTransition:Production_tier_to_Production_tier_ID_PerformanceL-Dyno"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera" src="//@components.0/@initial_s" dst="//@components.0/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera_reset" src="//@components.0/@states_link_to_State_Base.0" dst="//@components.0/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera" src="//@components.0/@states_link_to_State_Base.1" dst="//@components.0/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera_reset" src="//@components.0/@states_link_to_State_Base.2" dst="//@components.0/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera" src="//@components.0/@states_link_to_State_Base.1" dst="//@components.0/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera_reset" src="//@components.0/@states_link_to_State_Base.2" dst="//@components.0/@initial_s" in_connector_end="//@connector_motifs.1/@ends.0"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera_to_Camera" src="//@components.0/@states_link_to_State_Base.0" dst="//@components.0/@states_link_to_State_Base.0" in_connector_end="//@connector_motifs.0/@ends.1"/>
+    <guards name="Implies___srcComponent:Screen___dstComponnt:Camera" guardMethod="srcFeature:Colour___dstFeature:Camera___srcTransition:not_Colour_implies_Colour_Camera___dstTransition:Camera_reset"/>
   </components>
-  <components name="Process_type" usableComponent="false" correspondsTo="normal">
-    <states_link_to_State_Base state_name="Dyno"/>
-    <states_link_to_State_Base state_name="Type"/>
-    <states_link_to_State_Base state_name="SDyno"/>
-    <states_link_to_State_Base state_name="SType"/>
-    <states_link_to_State_Base state_name="SRDyno"/>
-    <states_link_to_State_Base state_name="SRType"/>
+  <components name="GPS" optional="true" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="GPS"/>
+    <states_link_to_State_Base state_name="SRGPS"/>
+    <states_link_to_State_Base state_name="SGPS"/>
     <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SDyno" src="//@components.1/@initial_s" dst="//@components.1/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Spontaneous" transition_name="SType" src="//@components.1/@initial_s" dst="//@components.1/@states_link_to_State_Base.3"/>
-    <connectors xsi:type="Spontaneous" transition_name="SDyno_reset" src="//@components.1/@states_link_to_State_Base.0" dst="//@components.1/@states_link_to_State_Base.4"/>
-    <connectors xsi:type="Spontaneous" transition_name="SType_reset" src="//@components.1/@states_link_to_State_Base.1" dst="//@components.1/@states_link_to_State_Base.5"/>
-    <connectors xsi:type="Internal" transition_name="internal_Dyno" src="//@components.1/@states_link_to_State_Base.2" dst="//@components.1/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Type" src="//@components.1/@states_link_to_State_Base.3" dst="//@components.1/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_Dyno_reset" src="//@components.1/@states_link_to_State_Base.4" dst="//@components.1/@initial_s"/>
-    <connectors xsi:type="Internal" transition_name="internal_Type_reset" src="//@components.1/@states_link_to_State_Base.5" dst="//@components.1/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Dyno" src="//@components.1/@states_link_to_State_Base.2" dst="//@components.1/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Type" src="//@components.1/@states_link_to_State_Base.3" dst="//@components.1/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Enforceable" transition_name="Dyno_reset" src="//@components.1/@states_link_to_State_Base.4" dst="//@components.1/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Type_reset" src="//@components.1/@states_link_to_State_Base.5" dst="//@components.1/@initial_s"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS" src="//@components.1/@initial_s" dst="//@components.1/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS_reset" src="//@components.1/@states_link_to_State_Base.0" dst="//@components.1/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS" src="//@components.1/@states_link_to_State_Base.2" dst="//@components.1/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS_reset" src="//@components.1/@states_link_to_State_Base.1" dst="//@components.1/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS" src="//@components.1/@states_link_to_State_Base.2" dst="//@components.1/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS_reset" src="//@components.1/@states_link_to_State_Base.1" dst="//@components.1/@initial_s"/>
   </components>
-  <components name="Worker" usableComponent="true" correspondsTo="normal">
-    <states_link_to_State_Base state_name="Worker"/>
-    <states_link_to_State_Base state_name="SRWorker"/>
-    <states_link_to_State_Base state_name="SWorker"/>
+  <components name="Calls" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="SCalls"/>
+    <states_link_to_State_Base state_name="Calls"/>
+    <states_link_to_State_Base state_name="SRCalls"/>
     <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWorker" src="//@components.2/@initial_s" dst="//@components.2/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWorker_reset" src="//@components.2/@states_link_to_State_Base.0" dst="//@components.2/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_Worker" src="//@components.2/@states_link_to_State_Base.2" dst="//@components.2/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Worker_reset" src="//@components.2/@states_link_to_State_Base.1" dst="//@components.2/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Worker" src="//@components.2/@states_link_to_State_Base.2" dst="//@components.2/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Worker_reset" src="//@components.2/@states_link_to_State_Base.1" dst="//@components.2/@initial_s"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls" src="//@components.2/@initial_s" dst="//@components.2/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls_reset" src="//@components.2/@states_link_to_State_Base.1" dst="//@components.2/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls" src="//@components.2/@states_link_to_State_Base.0" dst="//@components.2/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls_reset" src="//@components.2/@states_link_to_State_Base.2" dst="//@components.2/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls" src="//@components.2/@states_link_to_State_Base.0" dst="//@components.2/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls_reset" src="//@components.2/@states_link_to_State_Base.2" dst="//@components.2/@initial_s"/>
   </components>
-  <components name="Dyno" usableComponent="true" correspondsTo="and">
-    <states_link_to_State_Base state_name="Hobby"/>
-    <states_link_to_State_Base state_name="Production_tier"/>
-    <states_link_to_State_Base state_name="Free"/>
-    <states_link_to_State_Base state_name="SHobby"/>
-    <states_link_to_State_Base state_name="SProduction_tier"/>
-    <states_link_to_State_Base state_name="SFree"/>
-    <states_link_to_State_Base state_name="SRHobby"/>
-    <states_link_to_State_Base state_name="SRProduction_tier"/>
-    <states_link_to_State_Base state_name="SRFree"/>
+  <components name="MP3" usableComponent="true" correspondsTo="normal">
+    <states_link_to_State_Base state_name="MP3"/>
+    <states_link_to_State_Base state_name="SMP3"/>
+    <states_link_to_State_Base state_name="SRMP3"/>
     <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SFree" src="//@components.3/@initial_s" dst="//@components.3/@states_link_to_State_Base.5"/>
-    <connectors xsi:type="Spontaneous" transition_name="SHobby" src="//@components.3/@initial_s" dst="//@components.3/@states_link_to_State_Base.3"/>
-    <connectors xsi:type="Spontaneous" transition_name="SProduction_tier" src="//@components.3/@initial_s" dst="//@components.3/@states_link_to_State_Base.4"/>
-    <connectors xsi:type="Spontaneous" transition_name="SFree_reset" src="//@components.3/@states_link_to_State_Base.2" dst="//@components.3/@states_link_to_State_Base.8"/>
-    <connectors xsi:type="Spontaneous" transition_name="SHobby_reset" src="//@components.3/@states_link_to_State_Base.0" dst="//@components.3/@states_link_to_State_Base.6"/>
-    <connectors xsi:type="Spontaneous" transition_name="SProduction_tier_reset" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.7"/>
-    <connectors xsi:type="Internal" transition_name="internal_Free" src="//@components.3/@states_link_to_State_Base.5" dst="//@components.3/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Internal" transition_name="internal_Hobby" src="//@components.3/@states_link_to_State_Base.3" dst="//@components.3/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Production_tier" src="//@components.3/@states_link_to_State_Base.4" dst="//@components.3/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_Free_reset" src="//@components.3/@states_link_to_State_Base.8" dst="//@components.3/@initial_s"/>
-    <connectors xsi:type="Internal" transition_name="internal_Hobby_reset" src="//@components.3/@states_link_to_State_Base.6" dst="//@components.3/@initial_s"/>
-    <connectors xsi:type="Internal" transition_name="internal_Production_tier_reset" src="//@components.3/@states_link_to_State_Base.7" dst="//@components.3/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Free" src="//@components.3/@states_link_to_State_Base.5" dst="//@components.3/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Enforceable" transition_name="Hobby" src="//@components.3/@states_link_to_State_Base.3" dst="//@components.3/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Production_tier" src="//@components.3/@states_link_to_State_Base.4" dst="//@components.3/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Enforceable" transition_name="Free_reset" src="//@components.3/@states_link_to_State_Base.8" dst="//@components.3/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Hobby_reset" src="//@components.3/@states_link_to_State_Base.6" dst="//@components.3/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Production_tier_reset" src="//@components.3/@states_link_to_State_Base.7" dst="//@components.3/@initial_s" in_connector_end="//@connector_motifs.1/@ends.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Production_tier_to_Production_tier_ID_PerformanceL-Dyno" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.1" in_connector_end="//@connector_motifs.4/@ends.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Production_tier_to_Production_tier_ID_PerformanceM-Dyno" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.1" in_connector_end="//@connector_motifs.0/@ends.1"/>
-    <connectors xsi:type="Enforceable" transition_name="Production_tier_to_Production_tier_ID_StandardX1-Dyno" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.1" in_connector_end="//@connector_motifs.2/@ends.1"/>
-    <connectors xsi:type="Enforceable" transition_name="Production_tier_to_Production_tier_ID_StandardM-Dyno" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.1" in_connector_end="//@connector_motifs.3/@ends.1"/>
-    <guards name="Hierarchical___srcComponent:Dyno___dstComponnt:SubFeatures" guardMethod="srcFeature:Production_tier___dstFeature:SubFeatures___srcTransition:Production_tier_reset___dstTransition:SubFeatures"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3" src="//@components.3/@initial_s" dst="//@components.3/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3_reset" src="//@components.3/@states_link_to_State_Base.0" dst="//@components.3/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3_reset" src="//@components.3/@states_link_to_State_Base.2" dst="//@components.3/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3" src="//@components.3/@states_link_to_State_Base.1" dst="//@components.3/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3_reset" src="//@components.3/@states_link_to_State_Base.2" dst="//@components.3/@initial_s"/>
   </components>
-  <components name="Heroku" usableComponent="false" correspondsTo="normal">
-    <states_link_to_State_Base state_name="Application"/>
-    <states_link_to_State_Base state_name="SApplication"/>
-    <states_link_to_State_Base state_name="SRApplication"/>
+  <components name="Media" usableComponent="false" correspondsTo="or">
+    <states_link_to_State_Base state_name="MP3"/>
+    <states_link_to_State_Base state_name="Camera"/>
+    <states_link_to_State_Base state_name="SMP3"/>
+    <states_link_to_State_Base state_name="SCamera"/>
+    <states_link_to_State_Base state_name="SRMP3"/>
+    <states_link_to_State_Base state_name="SRCamera"/>
     <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SApplication" src="//@components.4/@initial_s" dst="//@components.4/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Spontaneous" transition_name="SApplication_reset" src="//@components.4/@states_link_to_State_Base.0" dst="//@components.4/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Internal" transition_name="internal_Application" src="//@components.4/@states_link_to_State_Base.1" dst="//@components.4/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Application_reset" src="//@components.4/@states_link_to_State_Base.2" dst="//@components.4/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Application" src="//@components.4/@states_link_to_State_Base.1" dst="//@components.4/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Application_reset" src="//@components.4/@states_link_to_State_Base.2" dst="//@components.4/@initial_s"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera" src="//@components.4/@initial_s" dst="//@components.4/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3" src="//@components.4/@initial_s" dst="//@components.4/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCamera_reset" src="//@components.4/@states_link_to_State_Base.1" dst="//@components.4/@states_link_to_State_Base.5"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMP3_reset" src="//@components.4/@states_link_to_State_Base.0" dst="//@components.4/@states_link_to_State_Base.4"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera" src="//@components.4/@states_link_to_State_Base.3" dst="//@components.4/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3" src="//@components.4/@states_link_to_State_Base.2" dst="//@components.4/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_Camera_reset" src="//@components.4/@states_link_to_State_Base.5" dst="//@components.4/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_MP3_reset" src="//@components.4/@states_link_to_State_Base.4" dst="//@components.4/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera" src="//@components.4/@states_link_to_State_Base.3" dst="//@components.4/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3" src="//@components.4/@states_link_to_State_Base.2" dst="//@components.4/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="Camera_reset" src="//@components.4/@states_link_to_State_Base.5" dst="//@components.4/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="MP3_reset" src="//@components.4/@states_link_to_State_Base.4" dst="//@components.4/@initial_s"/>
   </components>
-  <components name="StandardX1" usableComponent="true" correspondsTo="normal">
-    <states_link_to_State_Base state_name="StandardX1"/>
-    <states_link_to_State_Base state_name="SRStandardX1"/>
-    <states_link_to_State_Base state_name="SStandardX1"/>
+  <components name="Screen" usableComponent="true" correspondsTo="and">
+    <states_link_to_State_Base state_name="Colour"/>
+    <states_link_to_State_Base state_name="High_Resolution"/>
+    <states_link_to_State_Base state_name="Basic"/>
+    <states_link_to_State_Base state_name="SColour"/>
+    <states_link_to_State_Base state_name="SHigh_Resolution"/>
+    <states_link_to_State_Base state_name="SBasic"/>
+    <states_link_to_State_Base state_name="SRColour"/>
+    <states_link_to_State_Base state_name="SRHigh_Resolution"/>
+    <states_link_to_State_Base state_name="SRBasic"/>
     <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardX1" src="//@components.5/@initial_s" dst="//@components.5/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardX1_reset" src="//@components.5/@states_link_to_State_Base.0" dst="//@components.5/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardX1" src="//@components.5/@states_link_to_State_Base.2" dst="//@components.5/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardX1_reset" src="//@components.5/@states_link_to_State_Base.1" dst="//@components.5/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardX1" src="//@components.5/@states_link_to_State_Base.2" dst="//@components.5/@states_link_to_State_Base.0" in_connector_end="//@connector_motifs.2/@ends.0"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardX1_reset" src="//@components.5/@states_link_to_State_Base.1" dst="//@components.5/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="not_StandardX1_Hierarchical_StandardX1_Dyno" src="//@components.5/@initial_s" dst="//@components.5/@initial_s" in_connector_end="//@connector_motifs.1/@ends.3"/>
-    <guards name="Hierarchical___srcComponent:StandardX1___dstComponnt:Dyno" guardMethod="srcFeature:StandardX1___dstFeature:Production_tier___srcTransition:StandardX1___dstTransition:Production_tier_to_Production_tier_ID_StandardX1-Dyno"/>
-  </components>
-  <components name="Type" usableComponent="false" correspondsTo="or">
-    <states_link_to_State_Base state_name="Worker"/>
-    <states_link_to_State_Base state_name="Web"/>
-    <states_link_to_State_Base state_name="SWorker"/>
-    <states_link_to_State_Base state_name="SWeb"/>
-    <states_link_to_State_Base state_name="SRWorker"/>
-    <states_link_to_State_Base state_name="SRWeb"/>
-    <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWeb" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.3"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWorker" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWeb_reset" src="//@components.6/@states_link_to_State_Base.1" dst="//@components.6/@states_link_to_State_Base.5"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWorker_reset" src="//@components.6/@states_link_to_State_Base.0" dst="//@components.6/@states_link_to_State_Base.4"/>
-    <connectors xsi:type="Internal" transition_name="internal_Web" src="//@components.6/@states_link_to_State_Base.3" dst="//@components.6/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_Worker" src="//@components.6/@states_link_to_State_Base.2" dst="//@components.6/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Web_reset" src="//@components.6/@states_link_to_State_Base.5" dst="//@components.6/@initial_s"/>
-    <connectors xsi:type="Internal" transition_name="internal_Worker_reset" src="//@components.6/@states_link_to_State_Base.4" dst="//@components.6/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Web" src="//@components.6/@states_link_to_State_Base.3" dst="//@components.6/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Enforceable" transition_name="Worker" src="//@components.6/@states_link_to_State_Base.2" dst="//@components.6/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Web_reset" src="//@components.6/@states_link_to_State_Base.5" dst="//@components.6/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Worker_reset" src="//@components.6/@states_link_to_State_Base.4" dst="//@components.6/@initial_s"/>
-  </components>
-  <components name="Web" usableComponent="true" correspondsTo="normal">
-    <states_link_to_State_Base state_name="SRWeb"/>
-    <states_link_to_State_Base state_name="Web"/>
-    <states_link_to_State_Base state_name="SWeb"/>
-    <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWeb" src="//@components.7/@initial_s" dst="//@components.7/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Spontaneous" transition_name="SWeb_reset" src="//@components.7/@states_link_to_State_Base.1" dst="//@components.7/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Web" src="//@components.7/@states_link_to_State_Base.2" dst="//@components.7/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_Web_reset" src="//@components.7/@states_link_to_State_Base.0" dst="//@components.7/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Web" src="//@components.7/@states_link_to_State_Base.2" dst="//@components.7/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Enforceable" transition_name="Web_reset" src="//@components.7/@states_link_to_State_Base.0" dst="//@components.7/@initial_s"/>
-  </components>
-  <components name="Application" usableComponent="false" correspondsTo="normal">
-    <states_link_to_State_Base state_name="Process_type"/>
-    <states_link_to_State_Base state_name="SProcess_type"/>
-    <states_link_to_State_Base state_name="SRProcess_type"/>
-    <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SProcess_type" src="//@components.8/@initial_s" dst="//@components.8/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Spontaneous" transition_name="SProcess_type_reset" src="//@components.8/@states_link_to_State_Base.0" dst="//@components.8/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Internal" transition_name="internal_Process_type" src="//@components.8/@states_link_to_State_Base.1" dst="//@components.8/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Process_type_reset" src="//@components.8/@states_link_to_State_Base.2" dst="//@components.8/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Process_type" src="//@components.8/@states_link_to_State_Base.1" dst="//@components.8/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Process_type_reset" src="//@components.8/@states_link_to_State_Base.2" dst="//@components.8/@initial_s"/>
-  </components>
-  <components name="StandardM" usableComponent="true" correspondsTo="normal">
-    <states_link_to_State_Base state_name="SStandardM"/>
-    <states_link_to_State_Base state_name="StandardM"/>
-    <states_link_to_State_Base state_name="SRStandardM"/>
-    <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardM" src="//@components.9/@initial_s" dst="//@components.9/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardM_reset" src="//@components.9/@states_link_to_State_Base.1" dst="//@components.9/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardM" src="//@components.9/@states_link_to_State_Base.0" dst="//@components.9/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardM_reset" src="//@components.9/@states_link_to_State_Base.2" dst="//@components.9/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardM" src="//@components.9/@states_link_to_State_Base.0" dst="//@components.9/@states_link_to_State_Base.1" in_connector_end="//@connector_motifs.3/@ends.0"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardM_reset" src="//@components.9/@states_link_to_State_Base.2" dst="//@components.9/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="not_StandardM_Hierarchical_StandardM_Dyno" src="//@components.9/@initial_s" dst="//@components.9/@initial_s" in_connector_end="//@connector_motifs.1/@ends.4"/>
-    <guards name="Hierarchical___srcComponent:StandardM___dstComponnt:Dyno" guardMethod="srcFeature:StandardM___dstFeature:Production_tier___srcTransition:StandardM___dstTransition:Production_tier_to_Production_tier_ID_StandardM-Dyno"/>
-  </components>
-  <components name="PerformanceM" usableComponent="true" correspondsTo="normal">
-    <states_link_to_State_Base state_name="SPerformanceM"/>
-    <states_link_to_State_Base state_name="PerformanceM"/>
-    <states_link_to_State_Base state_name="SRPerformanceM"/>
-    <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceM" src="//@components.10/@initial_s" dst="//@components.10/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceM_reset" src="//@components.10/@states_link_to_State_Base.1" dst="//@components.10/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceM" src="//@components.10/@states_link_to_State_Base.0" dst="//@components.10/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceM_reset" src="//@components.10/@states_link_to_State_Base.2" dst="//@components.10/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceM" src="//@components.10/@states_link_to_State_Base.0" dst="//@components.10/@states_link_to_State_Base.1" in_connector_end="//@connector_motifs.0/@ends.0"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceM_reset" src="//@components.10/@states_link_to_State_Base.2" dst="//@components.10/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="not_PerformanceM_Hierarchical_PerformanceM_Dyno" src="//@components.10/@initial_s" dst="//@components.10/@initial_s" in_connector_end="//@connector_motifs.1/@ends.2"/>
-    <guards name="Hierarchical___srcComponent:PerformanceM___dstComponnt:Dyno" guardMethod="srcFeature:PerformanceM___dstFeature:Production_tier___srcTransition:PerformanceM___dstTransition:Production_tier_to_Production_tier_ID_PerformanceM-Dyno"/>
+    <connectors xsi:type="Spontaneous" transition_name="SBasic" src="//@components.5/@initial_s" dst="//@components.5/@states_link_to_State_Base.5"/>
+    <connectors xsi:type="Spontaneous" transition_name="SColour" src="//@components.5/@initial_s" dst="//@components.5/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Spontaneous" transition_name="SHigh_Resolution" src="//@components.5/@initial_s" dst="//@components.5/@states_link_to_State_Base.4"/>
+    <connectors xsi:type="Spontaneous" transition_name="SBasic_reset" src="//@components.5/@states_link_to_State_Base.2" dst="//@components.5/@states_link_to_State_Base.8"/>
+    <connectors xsi:type="Spontaneous" transition_name="SColour_reset" src="//@components.5/@states_link_to_State_Base.0" dst="//@components.5/@states_link_to_State_Base.6"/>
+    <connectors xsi:type="Spontaneous" transition_name="SHigh_Resolution_reset" src="//@components.5/@states_link_to_State_Base.1" dst="//@components.5/@states_link_to_State_Base.7"/>
+    <connectors xsi:type="Internal" transition_name="internal_Basic" src="//@components.5/@states_link_to_State_Base.5" dst="//@components.5/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Colour" src="//@components.5/@states_link_to_State_Base.3" dst="//@components.5/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_High_Resolution" src="//@components.5/@states_link_to_State_Base.4" dst="//@components.5/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_Basic_reset" src="//@components.5/@states_link_to_State_Base.8" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_Colour_reset" src="//@components.5/@states_link_to_State_Base.6" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_High_Resolution_reset" src="//@components.5/@states_link_to_State_Base.7" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Basic" src="//@components.5/@states_link_to_State_Base.5" dst="//@components.5/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Enforceable" transition_name="Colour" src="//@components.5/@states_link_to_State_Base.3" dst="//@components.5/@states_link_to_State_Base.0" in_connector_end="//@connector_motifs.0/@ends.0"/>
+    <connectors xsi:type="Enforceable" transition_name="High_Resolution" src="//@components.5/@states_link_to_State_Base.4" dst="//@components.5/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="Basic_reset" src="//@components.5/@states_link_to_State_Base.8" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Colour_reset" src="//@components.5/@states_link_to_State_Base.6" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="High_Resolution_reset" src="//@components.5/@states_link_to_State_Base.7" dst="//@components.5/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="not_Colour_implies_Colour_Camera" src="//@components.5/@initial_s" dst="//@components.5/@initial_s" in_connector_end="//@connector_motifs.1/@ends.1"/>
+    <guards name="Implies___srcComponent:Screen___dstComponnt:Camera" guardMethod="srcFeature:Colour___dstFeature:Camera___srcTransition:Colour___dstTransition:Camera_to_Camera"/>
   </components>
   <components name="Mobile_Phone" usableComponent="false" correspondsTo="normal">
-    <states_link_to_State_Base state_name="Heroku"/>
-    <states_link_to_State_Base state_name="SHeroku"/>
-    <states_link_to_State_Base state_name="SRHeroku"/>
+    <states_link_to_State_Base state_name="Screen"/>
+    <states_link_to_State_Base state_name="GPS"/>
+    <states_link_to_State_Base state_name="Calls"/>
+    <states_link_to_State_Base state_name="Media"/>
+    <states_link_to_State_Base state_name="SScreen"/>
+    <states_link_to_State_Base state_name="SGPS"/>
+    <states_link_to_State_Base state_name="SCalls"/>
+    <states_link_to_State_Base state_name="SMedia"/>
+    <states_link_to_State_Base state_name="SRScreen"/>
+    <states_link_to_State_Base state_name="SRGPS"/>
+    <states_link_to_State_Base state_name="SRCalls"/>
+    <states_link_to_State_Base state_name="SRMedia"/>
     <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SHeroku" src="//@components.11/@initial_s" dst="//@components.11/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Spontaneous" transition_name="SHeroku_reset" src="//@components.11/@states_link_to_State_Base.0" dst="//@components.11/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Internal" transition_name="internal_Heroku" src="//@components.11/@states_link_to_State_Base.1" dst="//@components.11/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_Heroku_reset" src="//@components.11/@states_link_to_State_Base.2" dst="//@components.11/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="Heroku" src="//@components.11/@states_link_to_State_Base.1" dst="//@components.11/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="Heroku_reset" src="//@components.11/@states_link_to_State_Base.2" dst="//@components.11/@initial_s"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.6"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMedia" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.7"/>
+    <connectors xsi:type="Spontaneous" transition_name="SScreen" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.4"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS" src="//@components.6/@initial_s" dst="//@components.6/@states_link_to_State_Base.5"/>
+    <connectors xsi:type="Spontaneous" transition_name="SCalls_reset" src="//@components.6/@states_link_to_State_Base.2" dst="//@components.6/@states_link_to_State_Base.10"/>
+    <connectors xsi:type="Spontaneous" transition_name="SMedia_reset" src="//@components.6/@states_link_to_State_Base.3" dst="//@components.6/@states_link_to_State_Base.11"/>
+    <connectors xsi:type="Spontaneous" transition_name="SScreen_reset" src="//@components.6/@states_link_to_State_Base.0" dst="//@components.6/@states_link_to_State_Base.8"/>
+    <connectors xsi:type="Spontaneous" transition_name="SGPS_reset" src="//@components.6/@states_link_to_State_Base.1" dst="//@components.6/@states_link_to_State_Base.9"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls" src="//@components.6/@states_link_to_State_Base.6" dst="//@components.6/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Internal" transition_name="internal_Media" src="//@components.6/@states_link_to_State_Base.7" dst="//@components.6/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Internal" transition_name="internal_Screen" src="//@components.6/@states_link_to_State_Base.4" dst="//@components.6/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS" src="//@components.6/@states_link_to_State_Base.5" dst="//@components.6/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Internal" transition_name="internal_Calls_reset" src="//@components.6/@states_link_to_State_Base.10" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_Media_reset" src="//@components.6/@states_link_to_State_Base.11" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_Screen_reset" src="//@components.6/@states_link_to_State_Base.8" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Internal" transition_name="internal_GPS_reset" src="//@components.6/@states_link_to_State_Base.9" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls" src="//@components.6/@states_link_to_State_Base.6" dst="//@components.6/@states_link_to_State_Base.2"/>
+    <connectors xsi:type="Enforceable" transition_name="Media" src="//@components.6/@states_link_to_State_Base.7" dst="//@components.6/@states_link_to_State_Base.3"/>
+    <connectors xsi:type="Enforceable" transition_name="Screen" src="//@components.6/@states_link_to_State_Base.4" dst="//@components.6/@states_link_to_State_Base.0"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS" src="//@components.6/@states_link_to_State_Base.5" dst="//@components.6/@states_link_to_State_Base.1"/>
+    <connectors xsi:type="Enforceable" transition_name="Calls_reset" src="//@components.6/@states_link_to_State_Base.10" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Media_reset" src="//@components.6/@states_link_to_State_Base.11" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="Screen_reset" src="//@components.6/@states_link_to_State_Base.8" dst="//@components.6/@initial_s"/>
+    <connectors xsi:type="Enforceable" transition_name="GPS_reset" src="//@components.6/@states_link_to_State_Base.9" dst="//@components.6/@initial_s"/>
   </components>
-  <components name="Production_tier" usableComponent="false" correspondsTo="or">
-    <states_link_to_State_Base state_name="PerformanceM"/>
-    <states_link_to_State_Base state_name="PerformanceL"/>
-    <states_link_to_State_Base state_name="StandardX1"/>
-    <states_link_to_State_Base state_name="StandardM"/>
-    <states_link_to_State_Base state_name="SPerformanceM"/>
-    <states_link_to_State_Base state_name="SPerformanceL"/>
-    <states_link_to_State_Base state_name="SStandardX1"/>
-    <states_link_to_State_Base state_name="SStandardM"/>
-    <states_link_to_State_Base state_name="SRPerformanceM"/>
-    <states_link_to_State_Base state_name="SRPerformanceL"/>
-    <states_link_to_State_Base state_name="SRStandardX1"/>
-    <states_link_to_State_Base state_name="SRStandardM"/>
-    <initial_s state_name="init"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceL" src="//@components.12/@initial_s" dst="//@components.12/@states_link_to_State_Base.5"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceM" src="//@components.12/@initial_s" dst="//@components.12/@states_link_to_State_Base.4"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardX1" src="//@components.12/@initial_s" dst="//@components.12/@states_link_to_State_Base.6"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardM" src="//@components.12/@initial_s" dst="//@components.12/@states_link_to_State_Base.7"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceL_reset" src="//@components.12/@states_link_to_State_Base.1" dst="//@components.12/@states_link_to_State_Base.9"/>
-    <connectors xsi:type="Spontaneous" transition_name="SPerformanceM_reset" src="//@components.12/@states_link_to_State_Base.0" dst="//@components.12/@states_link_to_State_Base.8"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardX1_reset" src="//@components.12/@states_link_to_State_Base.2" dst="//@components.12/@states_link_to_State_Base.10"/>
-    <connectors xsi:type="Spontaneous" transition_name="SStandardM_reset" src="//@components.12/@states_link_to_State_Base.3" dst="//@components.12/@states_link_to_State_Base.11"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceL" src="//@components.12/@states_link_to_State_Base.5" dst="//@components.12/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceM" src="//@components.12/@states_link_to_State_Base.4" dst="//@components.12/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardX1" src="//@components.12/@states_link_to_State_Base.6" dst="//@components.12/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardM" src="//@components.12/@states_link_to_State_Base.7" dst="//@components.12/@states_link_to_State_Base.3"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceL_reset" src="//@components.12/@states_link_to_State_Base.9" dst="//@components.12/@initial_s"/>
-    <connectors xsi:type="Internal" transition_name="internal_PerformanceM_reset" src="//@components.12/@states_link_to_State_Base.8" dst="//@components.12/@initial_s"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardX1_reset" src="//@components.12/@states_link_to_State_Base.10" dst="//@components.12/@initial_s"/>
-    <connectors xsi:type="Internal" transition_name="internal_StandardM_reset" src="//@components.12/@states_link_to_State_Base.11" dst="//@components.12/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceL" src="//@components.12/@states_link_to_State_Base.5" dst="//@components.12/@states_link_to_State_Base.1"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceM" src="//@components.12/@states_link_to_State_Base.4" dst="//@components.12/@states_link_to_State_Base.0"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardX1" src="//@components.12/@states_link_to_State_Base.6" dst="//@components.12/@states_link_to_State_Base.2"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardM" src="//@components.12/@states_link_to_State_Base.7" dst="//@components.12/@states_link_to_State_Base.3"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceL_reset" src="//@components.12/@states_link_to_State_Base.9" dst="//@components.12/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="PerformanceM_reset" src="//@components.12/@states_link_to_State_Base.8" dst="//@components.12/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardX1_reset" src="//@components.12/@states_link_to_State_Base.10" dst="//@components.12/@initial_s"/>
-    <connectors xsi:type="Enforceable" transition_name="StandardM_reset" src="//@components.12/@states_link_to_State_Base.11" dst="//@components.12/@initial_s"/>
-  </components>
-  <connector_motifs connector_id="Hierarchical_PerformanceM__________Production_tier_to_Production_tier_ID_PerformanceM-Dyno">
-    <ends xsi:type="Trigger" one_enforceable="//@components.10/@connectors.4" description="This is the port of the component: PerformanceM from state :SPerformanceM to state :PerformanceM"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.3/@connectors.19" description="this is the port of the component: Dyno from state :Production_tier to state :Production_tier"/>
+  <connector_motifs connector_id="Implies_Colour__________Camera_to_Camera">
+    <ends xsi:type="Trigger" one_enforceable="//@components.5/@connectors.13" description="o_3 this is the port of the component: Screen from state :SColour to state :Colour"/>
+    <ends xsi:type="Trigger" one_enforceable="//@components.0/@connectors.6" description="this is the port of the component: Camera from state :Camera to state :Camera"/>
   </connector_motifs>
-  <connector_motifs connector_id="Hierarchical_Production_tier_reset">
-    <ends xsi:type="Trigger" one_enforceable="//@components.3/@connectors.17" description="This is the port of the component: Dyno from state :SRProduction_tier to state :init"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.0/@connectors.6" description="This is the port of the component: PerformanceL from state :init to state :init"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.10/@connectors.6" description="This is the port of the component: PerformanceM from state :init to state :init"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.5/@connectors.6" description="This is the port of the component: StandardX1 from state :init to state :init"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.9/@connectors.6" description="This is the port of the component: StandardM from state :init to state :init"/>
-  </connector_motifs>
-  <connector_motifs connector_id="Hierarchical_StandardX1__________Production_tier_to_Production_tier_ID_StandardX1-Dyno">
-    <ends xsi:type="Trigger" one_enforceable="//@components.5/@connectors.4" description="This is the port of the component: StandardX1 from state :SStandardX1 to state :StandardX1"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.3/@connectors.20" description="this is the port of the component: Dyno from state :Production_tier to state :Production_tier"/>
-  </connector_motifs>
-  <connector_motifs connector_id="Hierarchical_StandardM__________Production_tier_to_Production_tier_ID_StandardM-Dyno">
-    <ends xsi:type="Trigger" one_enforceable="//@components.9/@connectors.4" description="This is the port of the component: StandardM from state :SStandardM to state :StandardM"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.3/@connectors.21" description="this is the port of the component: Dyno from state :Production_tier to state :Production_tier"/>
-  </connector_motifs>
-  <connector_motifs connector_id="Hierarchical_PerformanceL__________Production_tier_to_Production_tier_ID_PerformanceL-Dyno">
-    <ends xsi:type="Trigger" one_enforceable="//@components.3/@connectors.18" description="this is the port of the component: Dyno from state :Production_tier to state :Production_tier"/>
-    <ends xsi:type="Trigger" one_enforceable="//@components.0/@connectors.4" description="This is the port of the component: PerformanceL from state :SPerformanceL to state :PerformanceL"/>
+  <connector_motifs connector_id="Implies_Camera_reset__________not_Colour_implies_Colour_Camera">
+    <ends xsi:type="Trigger" one_enforceable="//@components.0/@connectors.5" description="o_2 this is the port of the component: Camera from state :SRCamera to state :init"/>
+    <ends xsi:type="Trigger" one_enforceable="//@components.5/@connectors.18" description="this is the port of the component: Screen from state :init to state :init"/>
   </connector_motifs>
 </Java_BIP_project>
 </xmi:XMI>

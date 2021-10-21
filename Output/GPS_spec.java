@@ -10,8 +10,7 @@ import org.javabip.api.PortType;
 	@Port(name = GPS_ports.GPS_p_SGPS , type = PortType.spontaneous ),
 	@Port(name = GPS_ports.GPS_p_SGPS_reset , type = PortType.spontaneous ),
 	@Port(name = GPS_ports.GPS_p_GPS , type = PortType.enforceable ),
-	@Port(name = GPS_ports.GPS_p_GPS_reset , type = PortType.enforceable ),
-	@Port(name = GPS_ports.GPS_p_not_GPS , type = PortType.enforceable )
+	@Port(name = GPS_ports.GPS_p_GPS_reset , type = PortType.enforceable )
 })
 @ComponentType(initial = GPS_states.GPS_s_init , name ="GPS")
 public class GPS_spec{
@@ -19,7 +18,7 @@ public class GPS_spec{
 	protected Boolean start_constrain_GPS;
 	protected Boolean reset_constrain_GPS;
 	public GPS_spec(){
-		start_constrain_GPS = true;
+		start_constrain_GPS = false;
 		reset_constrain_GPS = false;
 	}
 
@@ -78,13 +77,6 @@ public Boolean check_reset_constrain_GPS(){
 @Transition(name =GPS_ports.GPS_p_GPS_reset, source = GPS_states.GPS_s_SRGPS, target = GPS_states.GPS_s_init, guard = "Constrain_reset_constrain_GPS")
 	public void trans_SRGPS_to_init_GPS_reset(){
 		System.out.println( "component name: GPS from :SRGPS---> init  Enforceable");
-	}
-
-
-
-@Transition(name =GPS_ports.GPS_p_not_GPS, source = GPS_states.GPS_s_init, target = GPS_states.GPS_s_init)
-	public void trans_init_to_init_not_GPS(){
-		System.out.println( "component name: GPS from :init---> init  Enforceable");
 	}
 
 

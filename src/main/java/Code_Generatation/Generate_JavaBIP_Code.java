@@ -11,6 +11,8 @@ import BIP_tools.Connector_Motif;
 import BIP_tools.State;
 import BIP_tools.Transition;
 
+import java.awt.Button;
+import java.awt.Color;
 import java.awt.TextField;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -93,10 +95,33 @@ public class Generate_JavaBIP_Code {
 	public static Transition Get_Transition(ArrayList<State> states_arraylist,Element transition_element, State init_state, char last_character_of_the_source_state,char last_character_of_the_destination) {
 		Transition t = null;
 		
+		String dstState_number_S="";
+		int dstState_number = -1, srcState_number = -1 ;
+		int itemNumber;
+		itemNumber= transition_element.getAttribute(transition_dst).length() - 1; 
+		
+		while (Character.isDigit(transition_element.getAttribute(transition_dst).charAt(itemNumber))) {
+			dstState_number_S =   transition_element.getAttribute(transition_dst).charAt(itemNumber) + dstState_number_S;
+			itemNumber --; 
+		} // get the number it can be series of numbers
+		if(!dstState_number_S.equals(""))
+			dstState_number = Integer.parseInt(dstState_number_S);
+
+		String srcState_number_S="";
+		itemNumber= transition_element.getAttribute(transition_src).length() - 1; 
+		while (Character.isDigit(transition_element.getAttribute(transition_src).charAt(itemNumber))) {
+			srcState_number_S =   transition_element.getAttribute(transition_src).charAt(itemNumber) + srcState_number_S;
+			itemNumber --; 
+		}
+		if(!srcState_number_S.equals(""))
+			srcState_number = Integer.parseInt(srcState_number_S);
+		
+		
+//		System.out.println("Sourc and dest number of " +transition_element.getAttribute(transition_name) +  "is :" + srcState_number + "__"+dstState_number);
 		
 		if(!Character.isDigit(last_character_of_the_source_state)) { // initial state is the init
 			if(Character.isDigit(last_character_of_the_destination)) {
-				int number_of_dst_state = Character.getNumericValue(last_character_of_the_destination);
+				int number_of_dst_state = dstState_number;
 				
 				if(transition_element.getAttribute(transition_type).equals("Internal") ) {	
 					 t = new Internal(transition_element.getAttribute(transition_name), init_state, states_arraylist.get(number_of_dst_state),null);
@@ -125,10 +150,10 @@ public class Generate_JavaBIP_Code {
 			}
 		}
 		else {
-			int number_of_src_state = Character.getNumericValue(last_character_of_the_source_state);
+			int number_of_src_state =srcState_number;
 
 			if(Character.isDigit(last_character_of_the_destination)) {
-				int number_of_dst_state = Character.getNumericValue(last_character_of_the_destination);
+				int number_of_dst_state = dstState_number;
 		
 				if(transition_element.getAttribute(transition_type).equals("Internal") ) {	
 					 t = new Internal(transition_element.getAttribute(transition_name), states_arraylist.get(number_of_src_state), states_arraylist.get(number_of_dst_state),null);
@@ -696,15 +721,23 @@ public class Generate_JavaBIP_Code {
 //		
 //		Button button_select_colour=new Button("Select colour");  
 //		Button button_unselect_colour=new Button("Unselect colour ");
+		
+//		button_select_MouseRadar.setBackground(Color.green); // added 
+//		button_unselect_MouseRadar.setBackground(Color.red);  //added 
+		
 		State state_filtered; 
 		for(int i=0; i <components_arraylist.size(); i++) { // move on all components
 			if(components_arraylist.get(i).getUsableComponent() == false)
 				continue;
 			for(int j =0 ; j < components_arraylist.get(i).removeIntermediateStates().size(); j++) { // move on all the filtered states of the component i
 				state_filtered = components_arraylist.get(i).removeIntermediateStates().get(j);
-				glueCode.append("\t\tButton button_select_" + state_filtered.getState_name() + " = new Button(\"Select " +state_filtered.getState_name() +"\");" );
+				glueCode.append("\t\tButton button_select_" + state_filtered.getState_name() + " = new Button(\"" +state_filtered.getState_name() +"\");" );
 				glueCode.append(System.lineSeparator());
-				glueCode.append("\t\tButton button_unselect_" + state_filtered.getState_name()  + " = new Button(\"Unselect " +state_filtered.getState_name() +"\");" );
+				glueCode.append("\t\tbutton_select_" + state_filtered.getState_name() + ".setBackground(Color.green);" );
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\tButton button_unselect_" + state_filtered.getState_name()  + " = new Button(\"" +state_filtered.getState_name() +"\");" );
+				glueCode.append(System.lineSeparator());
+				glueCode.append("\t\tbutton_unselect_" + state_filtered.getState_name() + ".setBackground(Color.red);" );
 				glueCode.append(System.lineSeparator());
 			}
 			glueCode.append(System.lineSeparator());
@@ -745,6 +778,12 @@ public class Generate_JavaBIP_Code {
 				glueCode.append(System.lineSeparator());
 				x_select += 160;
 				x_reset += 160;
+				if(x_select % 2100 == 0) {
+					y_select += 200;
+					y_reset +=  225 ; 
+					x_select = 20;
+					x_reset = 20;
+				}
 			}
 			glueCode.append(System.lineSeparator());
 		} 
@@ -1021,8 +1060,9 @@ public class Generate_JavaBIP_Code {
 		
 	}
 	private static String ImportsGeneration() {	
-		String S ="";
+		String S =""; 
 		S += "import java.awt.Button;\n";
+		S += "import java.awt.Color;\n";
 		S += "import java.awt.Frame;\n";
 		S += "import java.awt.TextField;\n";
 		S += "import java.awt.event.ActionEvent;\n";
@@ -1224,7 +1264,20 @@ public class Generate_JavaBIP_Code {
 		System.out.println("******************************************************************************************************************************************************************************");
 		System.out.println("*********************************************************************************************************************************************************");
 		System.out.println("******************************************************************************************************************************************************************************");
+		int numberOfComponents = UsableComponentsNumber(components_arraylist);
+		System.out.println("*******************Component number: " + numberOfComponents);
+		System.out.println("*******************Connector motifs: " + connectorsList.size());
 
 		
+	}
+
+
+	private static int UsableComponentsNumber(ArrayList<Component> components_arraylist) {
+		int sum =0;
+		for(int i =0; i < components_arraylist.size(); i++) {
+			if(components_arraylist.get(i).getUsableComponent() == true)
+				sum +=1;
+		}
+		return sum;
 	}
 }

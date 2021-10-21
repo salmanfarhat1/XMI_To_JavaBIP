@@ -29,31 +29,17 @@ public class Project_Glue{
 
 
 
-				port(Camera_spec.class, Camera_ports.Camera_p_Camera).requires(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_to_High_Resolution);
-				port(Camera_spec.class, Camera_ports.Camera_p_Camera).accepts(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_to_High_Resolution);
-				port(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_to_High_Resolution).requires(Camera_spec.class, Camera_ports.Camera_p_Camera);
-				port(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_to_High_Resolution).accepts(Camera_spec.class, Camera_ports.Camera_p_Camera);
+				port(Screen_spec.class, Screen_ports.Screen_p_Colour).requires(Camera_spec.class, Camera_ports.Camera_p_Camera_to_Camera);
+				port(Screen_spec.class, Screen_ports.Screen_p_Colour).accepts(Camera_spec.class, Camera_ports.Camera_p_Camera_to_Camera);
+				port(Camera_spec.class, Camera_ports.Camera_p_Camera_to_Camera).requires(Screen_spec.class, Screen_ports.Screen_p_Colour);
+				port(Camera_spec.class, Camera_ports.Camera_p_Camera_to_Camera).accepts(Screen_spec.class, Screen_ports.Screen_p_Colour);
 
 
 
-				port(GPS_spec.class, GPS_ports.GPS_p_GPS).requires(Screen_spec.class, Screen_ports.Screen_p_not_Basic);
-				port(GPS_spec.class, GPS_ports.GPS_p_GPS).accepts(Screen_spec.class, Screen_ports.Screen_p_not_Basic);
-				port(Screen_spec.class, Screen_ports.Screen_p_not_Basic).requires(GPS_spec.class, GPS_ports.GPS_p_GPS);
-				port(Screen_spec.class, Screen_ports.Screen_p_not_Basic).accepts(GPS_spec.class, GPS_ports.GPS_p_GPS);
-
-
-
-				port(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_reset).requires(Camera_spec.class, Camera_ports.Camera_p_not_Camera_implies_Camera_High_Resolution);
-				port(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_reset).accepts(Camera_spec.class, Camera_ports.Camera_p_not_Camera_implies_Camera_High_Resolution);
-				port(Camera_spec.class, Camera_ports.Camera_p_not_Camera_implies_Camera_High_Resolution).requires(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_reset);
-				port(Camera_spec.class, Camera_ports.Camera_p_not_Camera_implies_Camera_High_Resolution).accepts(Screen_spec.class, Screen_ports.Screen_p_High_Resolution_reset);
-
-
-
-				port(GPS_spec.class, GPS_ports.GPS_p_not_GPS).requires(Screen_spec.class, Screen_ports.Screen_p_Basic);
-				port(GPS_spec.class, GPS_ports.GPS_p_not_GPS).accepts(Screen_spec.class, Screen_ports.Screen_p_Basic);
-				port(Screen_spec.class, Screen_ports.Screen_p_Basic).requires(GPS_spec.class, GPS_ports.GPS_p_not_GPS);
-				port(Screen_spec.class, Screen_ports.Screen_p_Basic).accepts(GPS_spec.class, GPS_ports.GPS_p_not_GPS);
+				port(Camera_spec.class, Camera_ports.Camera_p_Camera_reset).requires(Screen_spec.class, Screen_ports.Screen_p_not_Colour_implies_Colour_Camera);
+				port(Camera_spec.class, Camera_ports.Camera_p_Camera_reset).accepts(Screen_spec.class, Screen_ports.Screen_p_not_Colour_implies_Colour_Camera);
+				port(Screen_spec.class, Screen_ports.Screen_p_not_Colour_implies_Colour_Camera).requires(Camera_spec.class, Camera_ports.Camera_p_Camera_reset);
+				port(Screen_spec.class, Screen_ports.Screen_p_not_Colour_implies_Colour_Camera).accepts(Camera_spec.class, Camera_ports.Camera_p_Camera_reset);
 			}
 		}.build();
 	}

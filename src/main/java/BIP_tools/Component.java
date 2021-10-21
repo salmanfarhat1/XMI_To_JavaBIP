@@ -283,9 +283,12 @@ public class Component {
 			else {
 				if(name.equals( guards.get(i).getSrcCmpTransition().getComponentOfTheTransition().getName())){ // if the component is the source one 
 					
-//					System.out.println("---------> " + (guards.get(i)).getSrcCmpTransition().getTransition_name().substring(2));
+				//	System.out.println("---------> " + (guards.get(i)).getSrcCmpTransition().getTransition_name());
 
 					if(guards.get(i).getSrcCmpTransition().getTransition_name().contains("reset")) {
+					//	System.out.println("-----ss----> " + (guards.get(i)).getSrcCmpTransition().getSrc().getState_name());
+
+					//	System.out.println("-----ss----> " + (guards.get(i)).getSrcCmpTransition().getDst().getState_name());
 						reseting_constaints.put(findStateByName( (guards.get(i)).getSrcCmpTransition().getSrc().getState_name().substring(2)), true);
 					}
 					else {

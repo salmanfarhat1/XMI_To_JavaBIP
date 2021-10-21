@@ -19,33 +19,25 @@ import org.javabip.api.PortType;
 	@Port(name = Screen_ports.Screen_p_Basic_reset , type = PortType.enforceable ),
 	@Port(name = Screen_ports.Screen_p_Colour_reset , type = PortType.enforceable ),
 	@Port(name = Screen_ports.Screen_p_High_Resolution_reset , type = PortType.enforceable ),
-	@Port(name = Screen_ports.Screen_p_High_Resolution_to_High_Resolution , type = PortType.enforceable ),
-	@Port(name = Screen_ports.Screen_p_not_Basic , type = PortType.enforceable )
+	@Port(name = Screen_ports.Screen_p_not_Colour_implies_Colour_Camera , type = PortType.enforceable )
 })
 @ComponentType(initial = Screen_states.Screen_s_init , name ="Screen")
 public class Screen_spec{
 
-	protected Boolean start_constrain_Colour;
 	protected Boolean start_constrain_Basic;
 	protected Boolean start_constrain_High_Resolution;
-	protected Boolean reset_constrain_Colour;
+	protected Boolean start_constrain_Colour;
 	protected Boolean reset_constrain_Basic;
 	protected Boolean reset_constrain_High_Resolution;
+	protected Boolean reset_constrain_Colour;
 	public Screen_spec(){
-		start_constrain_Colour = false;
-		start_constrain_Basic = true;
+		start_constrain_Basic = false;
 		start_constrain_High_Resolution = false;
-		reset_constrain_Colour = false;
+		start_constrain_Colour = true;
 		reset_constrain_Basic = false;
-		reset_constrain_High_Resolution = true;
+		reset_constrain_High_Resolution = false;
+		reset_constrain_Colour = false;
 	}
-
-
-@Guard(name = "Constrain_start_constrain_Colour")
-public Boolean check_start_constrain_Colour(){
-	 return start_constrain_Colour;
-}
-
 
 
 @Guard(name = "Constrain_start_constrain_Basic")
@@ -62,9 +54,9 @@ public Boolean check_start_constrain_High_Resolution(){
 
 
 
-@Guard(name = "Constrain_reset_constrain_Colour")
-public Boolean check_reset_constrain_Colour(){
-	 return reset_constrain_Colour;
+@Guard(name = "Constrain_start_constrain_Colour")
+public Boolean check_start_constrain_Colour(){
+	 return start_constrain_Colour;
 }
 
 
@@ -79,6 +71,13 @@ public Boolean check_reset_constrain_Basic(){
 @Guard(name = "Constrain_reset_constrain_High_Resolution")
 public Boolean check_reset_constrain_High_Resolution(){
 	 return reset_constrain_High_Resolution;
+}
+
+
+
+@Guard(name = "Constrain_reset_constrain_Colour")
+public Boolean check_reset_constrain_Colour(){
+	 return reset_constrain_Colour;
 }
 
 
@@ -211,30 +210,23 @@ public Boolean check_reset_constrain_High_Resolution(){
 
 
 
-@Transition(name =Screen_ports.Screen_p_High_Resolution_to_High_Resolution, source = Screen_states.Screen_s_High_Resolution, target = Screen_states.Screen_s_High_Resolution)
-	public void trans_High_Resolution_to_High_Resolution_High_Resolution_to_High_Resolution(){
-		System.out.println( "component name: Screen from :High_Resolution---> High_Resolution  Enforceable");
-	}
-
-
-
-@Transition(name =Screen_ports.Screen_p_not_Basic, source = Screen_states.Screen_s_init, target = Screen_states.Screen_s_init)
-	public void trans_init_to_init_not_Basic(){
+@Transition(name =Screen_ports.Screen_p_not_Colour_implies_Colour_Camera, source = Screen_states.Screen_s_init, target = Screen_states.Screen_s_init)
+	public void trans_init_to_init_not_Colour_implies_Colour_Camera(){
 		System.out.println( "component name: Screen from :init---> init  Enforceable");
 	}
 
 
 
-@Transition(name =Screen_ports.Screen_p_not_Basic, source = Screen_states.Screen_s_High_Resolution, target = Screen_states.Screen_s_High_Resolution)
-	public void trans_High_Resolution_to_High_Resolution_not_Basic(){
+@Transition(name =Screen_ports.Screen_p_not_Colour_implies_Colour_Camera, source = Screen_states.Screen_s_High_Resolution, target = Screen_states.Screen_s_High_Resolution)
+	public void trans_High_Resolution_to_High_Resolution_not_Colour_implies_Colour_Camera(){
 		System.out.println( "component name: Screen from :High_Resolution---> High_Resolution  Enforceable");
 	}
 
 
 
-@Transition(name =Screen_ports.Screen_p_not_Basic, source = Screen_states.Screen_s_Colour, target = Screen_states.Screen_s_Colour)
-	public void trans_Colour_to_Colour_not_Basic(){
-		System.out.println( "component name: Screen from :Colour---> Colour  Enforceable");
+@Transition(name =Screen_ports.Screen_p_not_Colour_implies_Colour_Camera, source = Screen_states.Screen_s_Basic, target = Screen_states.Screen_s_Basic)
+	public void trans_Basic_to_Basic_not_Colour_implies_Colour_Camera(){
+		System.out.println( "component name: Screen from :Basic---> Basic  Enforceable");
 	}
 
 

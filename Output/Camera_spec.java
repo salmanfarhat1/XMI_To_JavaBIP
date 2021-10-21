@@ -11,7 +11,7 @@ import org.javabip.api.PortType;
 	@Port(name = Camera_ports.Camera_p_SCamera_reset , type = PortType.spontaneous ),
 	@Port(name = Camera_ports.Camera_p_Camera , type = PortType.enforceable ),
 	@Port(name = Camera_ports.Camera_p_Camera_reset , type = PortType.enforceable ),
-	@Port(name = Camera_ports.Camera_p_not_Camera_implies_Camera_High_Resolution , type = PortType.enforceable )
+	@Port(name = Camera_ports.Camera_p_Camera_to_Camera , type = PortType.enforceable )
 })
 @ComponentType(initial = Camera_states.Camera_s_init , name ="Camera")
 public class Camera_spec{
@@ -19,8 +19,8 @@ public class Camera_spec{
 	protected Boolean start_constrain_Camera;
 	protected Boolean reset_constrain_Camera;
 	public Camera_spec(){
-		start_constrain_Camera = true;
-		reset_constrain_Camera = false;
+		start_constrain_Camera = false;
+		reset_constrain_Camera = true;
 	}
 
 
@@ -82,9 +82,9 @@ public Boolean check_reset_constrain_Camera(){
 
 
 
-@Transition(name =Camera_ports.Camera_p_not_Camera_implies_Camera_High_Resolution, source = Camera_states.Camera_s_init, target = Camera_states.Camera_s_init)
-	public void trans_init_to_init_not_Camera_implies_Camera_High_Resolution(){
-		System.out.println( "component name: Camera from :init---> init  Enforceable");
+@Transition(name =Camera_ports.Camera_p_Camera_to_Camera, source = Camera_states.Camera_s_Camera, target = Camera_states.Camera_s_Camera)
+	public void trans_Camera_to_Camera_Camera_to_Camera(){
+		System.out.println( "component name: Camera from :Camera---> Camera  Enforceable");
 	}
 
 
